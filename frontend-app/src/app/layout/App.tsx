@@ -1,28 +1,27 @@
-import { useEffect, useState } from 'react'
+import {  useEffect, useState } from 'react'
 import axios from 'axios';
-import { Header, List } from 'semantic-ui-react';
+import { Container, Header, List } from 'semantic-ui-react';
+import { Products } from '../models/products';
+import NavBar from './NavBar';
+import ProductDashboard from '../../features/dashboard/ProductDashboard';
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const [products, setUsers] = useState<Products[]>([]);
   useEffect(() => {
-    axios.get('http://localhost:5000/api/users').then(response => {
+    axios.get<Products[]>('http://localhost:5000/api/products').then(response => {
       setUsers(response.data)
     })
   }, [])
 
   return (
-    <div>
-      <Header as='h2' icon='coffee' content='The Duse Cafe' />
+    <>
+      <NavBar />
+      <Container style={{marginTop:'7em'}}>
+        <ProductDashboard products={products}/>
+      </Container>
+     
 
-      <List>
-        {users.map((user: any) => (
-          <List.Item key={user.userId}>
-            {user.userName}
-          </List.Item>
-        ))}
-      </List>
-
-    </div>
+    </>
   )
 }
 
