@@ -5,11 +5,14 @@ import { Products } from '../models/products';
 import NavBar from './NavBar';
 import ProductDashboard from '../../features/dashboard/ProductDashboard';
 
+
 function App() {
-  const [products, setUsers] = useState<Products[]>([]);
+  const [products, setProducts] = useState<Products[]>([]);
+
+
   useEffect(() => {
     axios.get<Products[]>('http://localhost:5000/api/products').then(response => {
-      setUsers(response.data)
+      setProducts(response.data)
     })
   }, [])
 
@@ -19,8 +22,6 @@ function App() {
       <Container style={{marginTop:'7em'}}>
         <ProductDashboard products={products}/>
       </Container>
-     
-
     </>
   )
 }
