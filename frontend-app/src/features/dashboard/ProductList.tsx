@@ -8,10 +8,11 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   products: Products[];
-
+  selectProduct:(id:number)=>void;
+  openForm:()=>void;
 }
 
-export default function ProductList({ products }: Props) {
+export default function ProductList({ products,selectProduct,openForm }: Props) {
   const [category, setCategorys] = useState<Category[]>([]);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function ProductList({ products }: Props) {
       </Menu>
 
       <Segment>
+        <Button onClick={(openForm)} positive content="Add new Product"/>
         <Grid stackable columns={2}>
           {products.map((product) => (
             <Grid.Column key={product.id}>
@@ -48,14 +50,24 @@ export default function ProductList({ products }: Props) {
                     <div>{product.productDescription}</div>
                     <div>  {formatCurrency(product.productPrice)}</div>
                   </Item.Description>
-                  <Button floated='right' color="green" icon="add circle"></Button>
-                  <Button floated='right' color="grey" icon="edit"></Button>
+                  <Button floated='right'circular color="green" icon="add "></Button>
+                  <Button onClick={()=>selectProduct(product.id)} floated='right' color="grey" icon="edit"></Button>
                 </Item.Content>
               </Item>
             </Grid.Column>
           ))}
         </Grid>
       </Segment>
+      
+      <Menu>
+        {category && category.map((category, index) => (
+          <Menu.Item key={index}>
+            {category.categoryName}
+            
+          </Menu.Item>
+        ))}
+        <Button positive content="Add New Category" />
+      </Menu>
     </>
   );
 }

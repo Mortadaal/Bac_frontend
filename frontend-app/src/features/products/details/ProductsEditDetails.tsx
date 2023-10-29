@@ -1,33 +1,36 @@
 
 import { Button, Form, Segment, Select } from 'semantic-ui-react'
-//import { Products } from '../../../app/models/products';
+import { Products } from '../../../app/models/products';
 
 
-// interface Props {
-//     products: Products;
-//     cancleSelectActivity: () => void;
-//     openForm: (id: string) => void;
-// }
+
+interface Props {
+    products: Products;
+    cancleSelectProduct: () => void;
+    // openForm: (id: number) => void;
+}
 const LagerStatus = [
-    { key: 'true', text: 'På Lager', value:'true'},
-    { key: 'false', text: 'Udsolgt',value:'false' },
-    // Add more options as needed
+    { key: 1, text: 'På Lager', value:1},
+    { key: 0, text: 'Udsolgt',value:0 },
+   
 ];
 
-export default function ProductsEditDetails() {
+export default function ProductsEditDetails({products,cancleSelectProduct}:Props) {
     return (
         <Segment clearing>
             <Form>
-                <Form.Input placeholder='Produkt Navn' />
-                <Form.TextArea placeholder='Produkt Beskrivelse' />
-                <Form.Input placeholder='Produkt Pris' />
-                <Form.Field
-                    control={Select}
+                <Form.Input placeholder='Produkt Navn' value={products.productName} />
+                <Form.TextArea placeholder='Produkt Beskrivelse'  value={products.productDescription}/>
+                <Form.Input placeholder='Produkt Pris'  value={products.productPrice}/>
+                <Form.Field 
+                    // value={products.onStock} 
+                    control={Select} 
                     options={LagerStatus}
-                    placeholder='Lager Status' // Placeholder text for the dropdown
+                    placeholder='Lager Status' 
+                  
                 />
                 <Button.Group floated='right'>
-              <Button type='button' content='Anullere' />
+              <Button onClick={cancleSelectProduct} type='button' content='Anullere' />
               <Button.Or/>
               <Button positive type='submit' content='Gem' />
             </Button.Group>
