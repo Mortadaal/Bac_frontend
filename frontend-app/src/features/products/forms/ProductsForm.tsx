@@ -8,7 +8,7 @@ import { Category } from '../../../app/models/category';
 
 interface Props {
     products: Products | undefined;
-    category: Category|Category;
+    category: Category|Category[];
     closeForm: () => void;
 }
 const LagerStatus = [
@@ -95,14 +95,14 @@ export default function ProductsForm({ products: selectedProduct, closeForm, cat
                 />
                 <Form.Field
                     control={Select}
-                    options={category.map((cat) => ({
+                    options={(Array.isArray(category) ? category : [category]).map((cat) => ({
                         key: cat.id,
-                        text: cat.categoryName, // Adjust this according to your category model
+                        text: cat.categoryName,
                         value: cat.id,
                     }))}
                     placeholder='Select Category'
                     name='categoryId'
-                    value={category.categoryName}
+                    value={products.categoryId}
                     onChange={(_: any, data: any) => handleInputChange(data)}
                 />
                 <Button.Group floated='right'>
