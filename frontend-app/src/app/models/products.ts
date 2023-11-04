@@ -5,5 +5,5 @@ export interface Products {
     productDescription: string
     imageUrl: string
     onStock: boolean
-    subject: any
+    categoryId: any
   }

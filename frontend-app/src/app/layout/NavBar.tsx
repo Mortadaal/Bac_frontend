@@ -1,15 +1,18 @@
 
-import { Button, Container, Item, Menu } from "semantic-ui-react";
+import { Button, Container, Menu } from "semantic-ui-react";
+import './styles.css';
 
 
-export default function NavBar() {
+interface Props {
+    openForm: () => void;
+}
+export default function NavBar({ openForm }: Props) {
     return (
 
-        <Menu inverted fixed='top'>
-              <img  src='assets/smoke.png'  width="100px" height= "50px"></img>  
-              <text fontSize={100}  >The Duse Cafe</text>
-            <Menu.Item header style={{ marginRight: '100px' }}> 
-          
+        <Menu inverted fixed='top'>     
+            <Menu.Item> <div className="div-Text">The Duse Cafe</div></Menu.Item>
+            <Menu.Item header style={{ marginRight: '100px' }}>
+
             </Menu.Item>
             <Container>
 
@@ -17,7 +20,12 @@ export default function NavBar() {
                 <Menu.Item name='Menu' />
                 <Menu.Item name="VIP Room" />
                 <Menu.Item name="Om Os" />
+                <Menu.Item>
+                    <Button onClick={openForm} positive content="Add new Product" />
+                </Menu.Item>
+
                 <Menu.Menu position="right">
+
                     <Button circular className="custom-icon-button" style={{ width: "50px", height: "50px" }} icon="shopping basket"
                     >
                     </Button>
