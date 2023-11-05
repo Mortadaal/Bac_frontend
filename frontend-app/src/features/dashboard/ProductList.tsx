@@ -6,12 +6,15 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 
 interface Props {
   products: Products[];
-  category:Category[]|Category;
+  category:Category[];
   openForm: (id: number) => void;
+  deleteProduct:(id:number)=>void;
+  deleteCategory:(id:number)=>void;
 
 }
 
-export default function ProductList({ products, openForm ,category}: Props) {
+export default function ProductList({ products, openForm ,category,deleteCategory,deleteProduct}: Props) {
+  
   const categoryArray = Array.isArray(category) ? category : [category];
   return (
     <>
@@ -42,8 +45,10 @@ export default function ProductList({ products, openForm ,category}: Props) {
                     <div>{product.productDescription}</div>
                     <div>  {formatCurrency(product.productPrice)}</div>
                   </Item.Description>
+                  
                   <Button floated='right' circular color='green' icon='add'></Button>
-                  <Button onClick={() => openForm(product.id)} floated='right' color='grey' icon='edit'></Button>
+                  <Button floated='right' onClick={() => openForm(product.id)}  color='grey' icon='edit'></Button>
+                  <Button floated='left'  onClick={() => deleteProduct(product.id)}  color='red' content='Delete'></Button>
                 </Item.Content>
               </Item>
             </Grid.Column>

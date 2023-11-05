@@ -8,16 +8,19 @@ import { Category } from "../../app/models/category";
 
 interface Props{
     products:Products[];
-    category:Category[]|Category;
+    category:Category[];
     selectedProduct:Products|undefined;
- 
+    createOrEdit:(product:Products)=>void;
     selectProduct:(id:number)=>void;
     editMode:boolean;
     openForm:(id:number)=>void;
     closeForm:()=>void;
+    deleteProduct:(id:number)=>void;
+    deleteCategory:(id:number)=>void;
+    submitting:boolean;
 }
 
-export default function ProductDashboard({products,selectedProduct,openForm,closeForm,editMode,category }:Props) {
+export default function ProductDashboard({products,selectedProduct,openForm,closeForm,editMode,category,createOrEdit,deleteProduct,deleteCategory,submitting}:Props) {
 
 
     return (
@@ -27,7 +30,10 @@ export default function ProductDashboard({products,selectedProduct,openForm,clos
                <ProductList 
                products={products}
                openForm={openForm}
-               category={category}/>
+               category={category}
+               deleteProduct={deleteProduct}
+               deleteCategory={deleteCategory}
+               />
             </Grid.Column>
             <Grid.Column width={6}>
                 { editMode&&
@@ -35,6 +41,8 @@ export default function ProductDashboard({products,selectedProduct,openForm,clos
                 products={selectedProduct}
                 category={category}
                 closeForm={closeForm}
+                createOrEdit={createOrEdit}
+                submitting={submitting}
                 />}
             
             </Grid.Column>
