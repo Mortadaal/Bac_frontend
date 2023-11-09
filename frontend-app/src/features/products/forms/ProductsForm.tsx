@@ -1,27 +1,18 @@
 
 import { Button, Form,  Segment, Select } from 'semantic-ui-react'
-import { Products } from '../../../app/models/products';
 import { ChangeEvent, useState } from 'react';
-import { Category } from '../../../app/models/category';
+import { useStore } from '../../../app/stores/store';
+import { observer } from 'mobx-react-lite';
 
-
-
-interface Props {
-    products: Products | undefined;
-    category: Category[] ;
-    closeForm: () => void;
-    createOrEdit:(product:Products)=>void;
-    submitting:boolean;
-  
-}
 const LagerStatus = [
     { key: true, text: 'På Lager', value: true },
     { key: false, text: 'Udsolgt', value: false },
 
 ];
 
-export default function ProductsForm({ products: selectedProduct, closeForm, category,createOrEdit,submitting}: Props) {
-
+export default observer( function ProductsForm() {
+const {productStore,categoryStore}=useStore();
+const {selectedProduct,closeForm,createProduct,EditProduct,loading}=productStore;
     const initialState = selectedProduct ?? {
 
         id: 0,
@@ -34,13 +25,11 @@ export default function ProductsForm({ products: selectedProduct, closeForm, cat
     }
     const [products, setProducts] = useState(initialState);
     const [imageFile, setImageFile] = useState<File | null>(null);
+
     function handleSubmit() {
-        console.log(products);
-        createOrEdit(products);
+       products.id? EditProduct(products):createProduct(products);
     }
-    // function handleInputChange(event:ChangeEvent<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>){
-    // const {name,value}=event.target;
-    // setProducts({...products,[name]:value})
+    
 
     function handleInputChange(data: any) {
         const { name, value } = data;
@@ -113,7 +102,7 @@ export default function ProductsForm({ products: selectedProduct, closeForm, cat
                 <Form.Field
                     control={Select}
                     label='Valg af Kategori'
-                    options={(Array.isArray(category) ? category : [category]).map((cat) => ({
+                    options={(Array.isArray(categoryStore.categoryById) ? categoryStore.categoryById : [categoryStore.categoryById]).map((cat) => ({
                         key: cat.id,
                         text: cat.categoryName,
                         value: cat.id,
@@ -127,12 +116,12 @@ export default function ProductsForm({ products: selectedProduct, closeForm, cat
                 <Button.Group floated='right'>
                     <Button onClick={closeForm} type='button' content='Anullere' />
                     <Button.Or />
-                    <Button loading={submitting} positive type='submit' content='Gem' />
+                    <Button loading={loading} positive type='submit' content='Gem' />
                 </Button.Group>
             </Form>
         </Segment>
     )
-}
+})
 
 
 

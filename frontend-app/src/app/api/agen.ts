@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosResponse } from "axios";
+import axios, {AxiosResponse } from "axios";
 import { Products } from "../models/products";
 import { Category } from "../models/category";
 
@@ -37,7 +37,9 @@ const Products={
     delete:(id:number)=>axios.delete<void>(`/products/${id}`)
 }
 const Categorys={
-    list:()=>request.get<Category[]>('category')
+    list:()=>request.get<Category[]>('category'),
+    create:(category:Category)=>axios.post<void>('/category/addCategory',category),
+    delete:(categoryName:string)=>axios.delete<void>(`/category/${categoryName}`)
     
 }
 
