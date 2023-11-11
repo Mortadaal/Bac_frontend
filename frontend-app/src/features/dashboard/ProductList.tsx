@@ -3,10 +3,12 @@ import { formatCurrency } from "../../utilities/formatCurrency";
 import { SyntheticEvent, useState, useEffect } from "react"; // Import useEffect
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
+
 
 export default observer(function ProductList() {
   const { productStore, categoryStore } = useStore();
-  const { openForm, deleteProduct, productById, loading } = productStore;
+  const {  deleteProduct, productById, loading } = productStore;
   const { categoryById} = categoryStore;
 
   const [target, setTarget] = useState('');
@@ -31,12 +33,10 @@ export default observer(function ProductList() {
   const filteredProducts = selectedCategory
     ? productById.filter((product) => product.categoryId === selectedCategory)
     : productById;
-
+   
   return (
     <>
-      <Button onClick={() => productStore.openForm()} positive content="Add new Product" />
-      <Button positive onClick={() => categoryStore.openCategoryForm()} content="Tilføj Kategori" />
-      <Button negative onClick={() => categoryStore.openDeleteCategoryForm()} content="Slet Kategori" />
+    
 
       <Segment>
         <Grid stackable columns={2}>
@@ -64,7 +64,7 @@ export default observer(function ProductList() {
                   </Item.Description>
 
                   <Button floated="right" circular color="green" icon="add"></Button>
-                  <Button floated="right" onClick={() => openForm(product.id)} color="grey" icon="edit"></Button>
+                  <Button floated="right" as={Link} to={`/edit/${product.id}`} color="grey" icon="edit"></Button>
                   <Button
                     name={product.id}
                     floated="left"

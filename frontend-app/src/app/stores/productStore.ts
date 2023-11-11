@@ -3,12 +3,11 @@ import { Products } from "../models/products";
 import agent from "../api/agen";
 
 export default class ProductStore {
-
     productRegistry = new Map<number, Products>();
-    selectedProduct: Products | undefined = undefined;
+    selectedProduct?: Products = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true;
+    loadingInitial = false;
 
     constructor() {
         makeAutoObservable(this)
@@ -19,42 +18,59 @@ export default class ProductStore {
     };
 
     loadProducts = async () => {
+        this.setLoadingInitial(true);
         try {
             const products = await agent.Products.list();
-            runInAction(() => {
-               
+          
                 products.forEach((product) => {
-                    this.productRegistry.set(product.id, product);
-                });
-
-                this.loadingInitial = false;
+                    this.setProduct(product);
+                    this.setLoadingInitial(false);
             })
 
         } catch (error) {
             console.log(error);
-            runInAction(() => {
-                this.loadingInitial = false;
-            })
+        
+            this.setLoadingInitial(false);
+            
 
         }
     }
-    setLoadingInitial = (state: boolean) => {
-        this.loadingInitial = (state);
-    }
-    selectProduct = (id: number) => {
-        this.selectedProduct = this.productRegistry.get(id);
-    }
-    cancelSelectedProduct = () => {
-        this.selectedProduct = undefined;
-    }
-    openForm = (id?: number) => {
-        id ? this.selectProduct(id) : this.cancelSelectedProduct();
-        this.editMode = true;
-    }
-    closeForm = () => {
-        this.editMode = false;
+
+    loadProduct=async(id:number)=>{
+       
+        let product = this.getProduct(id);
+        if (product) {
+          this.selectedProduct = product;
+          return product;
+        } else {
+            this.setLoadingInitial(true);
+          try {
+            product = await agent.Products.details(id);
+            this.setProduct(product);
+            this.selectedProduct=product;
+            runInAction(() => {
+              this.selectedProduct = product;
+            });
+            this.setLoadingInitial(false);
+            return product;
+          } catch (error) {
+            console.log(error);
+            this.loadingInitial = false;
+          }
+        }
     }
 
+    private setProduct = (product: Products) => {
+        this.productRegistry.set(product.id, product);
+      };
+    
+      private getProduct = (id: number) => {
+        return this.productRegistry.get(id);
+      };
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
+    }
+  
     createProduct = async (product: Products) => {
         this.loading = true;
         product.id = product.id;
@@ -98,7 +114,6 @@ export default class ProductStore {
             await agent.Products.delete(id);
             runInAction(() => {
                 this.productRegistry.delete(id);
-                this.editMode = false;
                 this.loading = false;
             })
         } catch (error) {

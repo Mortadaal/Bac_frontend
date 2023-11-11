@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import { Button, Form, Segment, Select } from "semantic-ui-react";
 import {  useState } from "react";
+import { Link } from "react-router-dom";
 
 export default observer(function DeleteCategoryForm() {
     const { categoryStore } = useStore();
@@ -42,7 +43,7 @@ export default observer(function DeleteCategoryForm() {
                     onChange={(_: any, data: any) => handleInputChange(data)}
                 />
                 <Button.Group floated='right'>
-                    <Button onClick={closeDeleteCategoryForm} type='button' content='Anullere' />
+                    <Button as={Link} to={'/menu'} type='button' content='Anullere' />
                     <Button.Or />
                     <Button loading={categoryLoading} negative type='submit' content='Delete' />
                 </Button.Group>

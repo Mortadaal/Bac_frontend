@@ -27,15 +27,16 @@ const request={
     post:<T>(url:string, body:{})=>axios.post<T>(url,body).then(responsBody),
     put:<T>(url:string, body:{})=>axios.put<T>(url,body).then(responsBody),
     del:<T>(url:string)=>axios.delete<T>(url).then(responsBody)
-}
+};
 
 
 const Products={
     list:()=>request.get<Products[]>('products'),
-    create:(product:Products)=>axios.post<void>('/products/addProduct',product),
-    update:(product:Products)=>axios.put<void>(`/products/editProduct/${product.id}`,product),
-    delete:(id:number)=>axios.delete<void>(`/products/${id}`)
-}
+    details: (id:number)=>request.get<Products>(`/products/${id}`),
+    create:(product:Products)=>request.post<void>('/products/addProduct',product),
+    update:(product:Products)=>request.put<void>(`/products/editProduct/${product.id}`,product),
+    delete:(id:number)=>request.del<void>(`/products/${id}`)
+};
 const Categorys={
     list:()=>request.get<Category[]>('category'),
     create:(category:Category)=>axios.post<void>('/category/addCategory',category),
@@ -47,6 +48,6 @@ const Categorys={
 const agent = {
     Products,
     Categorys
-}
+};
 
 export default agent;

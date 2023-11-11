@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { ChangeEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default observer( function CategoryForm() {
     const {categoryStore}=useStore();
@@ -35,7 +36,7 @@ export default observer( function CategoryForm() {
                 value={categorys.categoryName}  
                 onChange={handleInputChange} />
                 <Button.Group floated='right'>
-                    <Button onClick={closeCategoryForm} type='button' content='Anullere' />
+                    <Button as={Link} to={'/menu'} type='button' content='Anullere' />
                     <Button.Or />
                     <Button loading={categoryLoading} positive type='submit' content='Gem' />
                 </Button.Group>
