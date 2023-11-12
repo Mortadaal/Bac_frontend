@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 
 export default observer(function ProductList() {
   const { productStore, categoryStore } = useStore();
-  const {  deleteProduct, productById, loading } = productStore;
-  const { categoryById} = categoryStore;
+  const { deleteProduct, productById, loading } = productStore;
+  const { categoryById } = categoryStore;
 
   const [target, setTarget] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined)
@@ -20,8 +20,8 @@ export default observer(function ProductList() {
     }
   }, [categoryById]);
 
- 
-  const handleCategoryClick = (categoryId:number) => {
+
+  const handleCategoryClick = (categoryId: number) => {
     setSelectedCategory(categoryId);
   };
 
@@ -33,25 +33,25 @@ export default observer(function ProductList() {
   const filteredProducts = selectedCategory
     ? productById.filter((product) => product.categoryId === selectedCategory)
     : productById;
-   
+
   return (
     <>
-    
+      <div className="category-container"> {categoryById.map((category) => (
+        <Button
+          className={`ui pagination menu ${selectedCategory === category.id ? 'active' : ''}`}
+          key={category.id}
+          onClick={() => handleCategoryClick(category.id)}
+        >
+          {category.categoryName}
+        </Button>
+      ))}
+      </div>
 
-      <Segment>
+      <Segment className="producthead">
         <Grid stackable columns={2}>
-          {categoryById.map((category) => (
-            <Button
-              className={`ui pagination menu ${selectedCategory === category.id ? 'active' : ''}`}
-              key={category.id}
-              onClick={() => handleCategoryClick(category.id)}
-            >
-              {category.categoryName}
-            </Button>
-          ))}
 
           {filteredProducts.map((product) => (
-            <Grid.Column key={product.id}>
+            <Grid.Column key={product.id} className="product-item-column">
               <Item>
                 <Item.Content>
                   <Item.Image>
@@ -73,7 +73,9 @@ export default observer(function ProductList() {
                     color="red"
                     content="Delete"
                   ></Button>
-                </Item.Content>
+                     {!product.onStock ? (<h3 className="text-secondary"  > Udsolgt </h3>) : null}
+                </Item.Content> 
+              
               </Item>
             </Grid.Column>
           ))}

@@ -3,7 +3,14 @@ body{
 }
 
 .ui.inverted.top.fixed.menu{
-    background-image: linear-gradient(135deg, rgb(72, 229, 10)0%, rgb(86, 161, 45) 69%, rgb(149, 172, 32)89%) !important;
+    background-image: linear-gradient(
+      135deg,
+       rgb(72, 229, 10)0%,
+       rgb(86, 161, 45) 69%,
+       rgb(149, 172, 32)89%)
+        !important;
+        display: flex;
+        align-items: center;
 }
 
 .div-Text{
@@ -14,7 +21,6 @@ body{
 @media screen and (max-width: 768px) {
   .ui.inverted.top.fixed.menu {
     background-image: linear-gradient(90deg, rgb(72, 229, 10) 0%, rgb(86, 161, 45) 69%, rgb(149, 172, 32) 89%) !important;
-  
     .container {
       margin-top: 3em; /* Adjust the margin for smaller screens */
     }
@@ -35,13 +41,28 @@ body{
   display: flex;
 }
 
-/* Show on mobile only */
-.mobile-only {
-    display: none;
+  .masthead{
+    display: flex;
+    align-items: center;
+    background-image: linear-gradient(
+      135deg,
+      rgb(72, 229, 10)0%,
+      rgb(86, 161, 45) 69%,
+      rgb(149, 172, 32)89%
+      ) !important;
+      height: 100vh;
   }
-  
-  
-  /* Show on tablet and up */
-  .tablet-and-up {
-    display: block;
+
+  .product-item-column {
+    margin-bottom: 10px; 
+    align-items: center;
+    padding: 30px;
+   
+  }
+
+  .category-container {
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* Adjust the column width as needed */
+    gap: 5px; /* Adjust the gap between buttons as needed */
   }

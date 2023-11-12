@@ -40,7 +40,8 @@ const Products={
 const Categorys={
     list:()=>request.get<Category[]>('category'),
     create:(category:Category)=>axios.post<void>('/category/addCategory',category),
-    delete:(categoryName:string)=>axios.delete<void>(`/category/${categoryName}`)
+    // delete:(categoryName:string)=>axios.delete<void>(`/category/${categoryName}`)
+    delete:(id:number)=>axios.delete<void>(`/category/${id}`)
     
 }
 

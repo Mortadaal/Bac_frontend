@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 
 export default observer(function DeleteCategoryForm() {
     const { categoryStore } = useStore();
-    const { deleteCategory, categoryLoading, selectedCategory, closeDeleteCategoryForm } = categoryStore;
+    const { deleteCategory, categoryLoading, selectedCategory } = categoryStore;
 
     const initialState = selectedCategory || {
 
@@ -23,7 +23,7 @@ export default observer(function DeleteCategoryForm() {
         setCategorys({ ...categorys, [name]: value });
     }
     function handleSubmit() {
-        deleteCategory(categorys.categoryName);
+        deleteCategory(categorys.id);
     }
 
     return (
@@ -35,11 +35,11 @@ export default observer(function DeleteCategoryForm() {
                     options={categoryStore.categoryById.map((cat) => ({
                         key: cat.id,
                         text: cat.categoryName,
-                        value: cat.categoryName,
+                        value: cat.id,
                     }))}
                     placeholder='Vælg Kategori'
-                    name='categoryName' 
-                    value={categorys.categoryName}
+                    name='id'
+                    value={categorys.id}
                     onChange={(_: any, data: any) => handleInputChange(data)}
                 />
                 <Button.Group floated='right'>

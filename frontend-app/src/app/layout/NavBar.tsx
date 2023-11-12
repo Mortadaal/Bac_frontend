@@ -1,5 +1,5 @@
 
-import { Button, Container, Menu } from "semantic-ui-react";
+import { Button, Container, Image, Menu } from "semantic-ui-react";
 import './styles.css';
 import { NavLink } from "react-router-dom";
 
@@ -11,7 +11,8 @@ export default function NavBar() {
    
     return (
         <Menu inverted fixed='top'>
-            <Menu.Item as={NavLink} to='/'> <div className="div-Text">The Duse Cafe</div></Menu.Item>
+                  
+           <Image as={NavLink} to='/' src='/assets/logo.jpg' style={{ width: '50px' }}/>
             <Menu.Item header style={{ marginRight: '100px' }}>
             </Menu.Item>
             <Container>

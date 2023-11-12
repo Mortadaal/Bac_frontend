@@ -73,12 +73,12 @@ export default class CategoryStore{
         this.editModeDeleteCategory=false;
     }
 
-    deleteCategory = async (categoryName: string) => {
+    deleteCategory = async (id: number) => {
         this.categoryLoading = true;
         try {
-          await agent.Categorys.delete(categoryName); 
+          await agent.Categorys.delete(id); 
           runInAction(() => {
-            this.categoryRegistry.delete(categoryName); 
+            this.categoryRegistry.delete(id); 
             this.editModeDeleteCategory = false;
             this.categoryLoading = false;
           });

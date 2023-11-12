@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
 
-export default function Homepage(){
-    return(
-        <Container style={{marginTop:'7em'}}>
-            
-            <h1>The Duse Cafe</h1>
-            <h3>Go to <Link to='menu' >Menu List</Link></h3>
-        </Container>
+export default function Homepage() {
+    return (
+        <Segment inverted textAlign="center" vertical className="masthead">
+            <Container text>
+                <Header as='h1' inverted>
+                    <Image
+                        src='/assets/logo.jpg'
+                        style={{ width: '400px', height: '400px', marginBottom: 12 }}
+                    />
+                </Header>
+                <Header as='h2' inverted content='Velkommen' />
+                <Button as={Link} to='/menu' size="huge" inverted>
+                    Kom til Menu'en
+                </Button>
+            </Container>
+        </Segment>
     )
 }

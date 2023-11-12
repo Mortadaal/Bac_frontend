@@ -86,7 +86,7 @@ useEffect(()=>{
                     onChange={handleImageUpload}
                 />
                 {imageFile && (
-                    <img className='item-image' src={URL.createObjectURL(imageFile)} alt="img" width="150" height="150" />
+                    <img className='item-image' src={URL.createObjectURL(imageFile)} alt="img" width="150" height="150"  />
                 )}
                 
                 <Form.Input
@@ -95,6 +95,7 @@ useEffect(()=>{
                     value={product.imageUrl}
                     onChange={(_: any, data: any) =>
                         handleInputChange(data)}
+                        readOnly
                 />
                 <Form.Input
                     placeholder='Produkt Navn'
