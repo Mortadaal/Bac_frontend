@@ -4,6 +4,7 @@ import { SyntheticEvent, useState, useEffect } from "react"; // Import useEffect
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
+import { useShoppingCart } from "../shopping/ShoppingCartContext";
 
 
 export default observer(function ProductList() {
@@ -13,6 +14,7 @@ export default observer(function ProductList() {
 
   const [target, setTarget] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined)
+  const{getItemQuantity, increaseCartQuantity}= useShoppingCart();
 
   useEffect(() => {
     if (categoryById.length > 0) {
@@ -34,22 +36,26 @@ export default observer(function ProductList() {
     ? productById.filter((product) => product.categoryId === selectedCategory)
     : productById;
 
+    const quantity=getItemQuantity(1);
+
   return (
-    <>
-      <div className="category-container"> {categoryById.map((category) => (
-        <Button
-          className={`ui pagination menu ${selectedCategory === category.id ? 'active' : ''}`}
-          key={category.id}
-          onClick={() => handleCategoryClick(category.id)}
-        >
-          {category.categoryName}
-        </Button>
-      ))}
+    <div className="ui grid">
+    <div className="four wide column">
+      <div className="ui vertical fluid tabular menu">
+        {categoryById.map((category) => (
+          <a
+            className={`item ${selectedCategory === category.id ? 'active' : ''}`}
+            key={category.id}
+            onClick={() => handleCategoryClick(category.id)}
+          >
+            {category.categoryName}
+          </a>
+        ))}
       </div>
-
-      <Segment className="producthead">
+    </div>
+    <div className="twelve wide stretched column">
+      <Segment>
         <Grid stackable columns={2}>
-
           {filteredProducts.map((product) => (
             <Grid.Column key={product.id} className="product-item-column">
               <Item>
@@ -62,8 +68,9 @@ export default observer(function ProductList() {
                     <div>{product.productDescription}</div>
                     <div>{formatCurrency(product.productPrice)}</div>
                   </Item.Description>
+                  {quantity ===0?<Button onClick={()=>increaseCartQuantity(product.id)} floated="right" circular color="green" icon="add"></Button>:null}
+             
 
-                  <Button floated="right" circular color="green" icon="add"></Button>
                   <Button floated="right" as={Link} to={`/edit/${product.id}`} color="grey" icon="edit"></Button>
                   <Button
                     name={product.id}
@@ -73,14 +80,15 @@ export default observer(function ProductList() {
                     color="red"
                     content="Delete"
                   ></Button>
-                     {!product.onStock ? (<h3 className="text-secondary"  > Udsolgt </h3>) : null}
-                </Item.Content> 
-              
+                  {!product.onStock ? <h3 className="text-secondary">Udsolgt</h3> : null}
+                </Item.Content>
               </Item>
             </Grid.Column>
           ))}
         </Grid>
       </Segment>
-    </>
+    </div>
+  </div>
+  
   );
 });

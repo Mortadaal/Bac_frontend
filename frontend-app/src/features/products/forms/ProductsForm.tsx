@@ -149,7 +149,7 @@ useEffect(()=>{
                 <Button.Group floated='right'>
                     <Button as={Link} to={'/menu'} type='button' content='Anullere' />
                     <Button.Or />
-                    <Button loading={loading} positive type='submit' content='Gem' />
+                    <Button loading={loading} positive type='submit' content='Opret' />
                 </Button.Group>
             </Form>
         </Segment>

@@ -38,7 +38,7 @@ export default observer( function CategoryForm() {
                 <Button.Group floated='right'>
                     <Button as={Link} to={'/menu'} type='button' content='Anullere' />
                     <Button.Or />
-                    <Button loading={categoryLoading} positive type='submit' content='Gem' />
+                    <Button loading={categoryLoading} positive type='submit' content='Opret' />
                 </Button.Group>
                 
              </Form>

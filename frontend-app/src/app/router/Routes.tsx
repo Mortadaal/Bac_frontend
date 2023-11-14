@@ -6,6 +6,9 @@ import BookingForm from "../../features/booking/BookingForm";
 import ProductsForm from "../../features/products/forms/ProductsForm";
 import CategoryForm from "../../features/categorys/forms/CategoryForm";
 import DeleteCategoryForm from "../../features/categorys/forms/DeleteCategoryForm";
+import ShoppingCart from "../../features/shopping/ShoppingCart";
+
+
 
 
 
@@ -22,6 +25,7 @@ export const routes: RouteObject[] = [
             {path:'edit/:id',element:<ProductsForm key='edit'/>},
             {path:'deleteCategory',element:<DeleteCategoryForm/>},
             {path:'addCategory',element:<CategoryForm/>},
+            {path:'cart',element:<ShoppingCart/>},
           
         
         ]
