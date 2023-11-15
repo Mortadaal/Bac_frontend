@@ -1,16 +1,17 @@
 
-import { Button, Container, Image, Menu } from "semantic-ui-react";
+import { Button} from "semantic-ui-react";
 import './styles.css';
 import { Link, NavLink } from "react-router-dom";
-import { useShoppingCart } from "../../features/shopping/ShoppingCartContext";
-import ShoppingCart from "../../features/shopping/ShoppingCart";
+import { useStore } from "../stores/store";
+import { observer } from "mobx-react-lite";
 
 
 
 
-export default function NavBar() {
-
-    const { openCart, cartQuantity } = useShoppingCart()
+export default observer(function NavBar() {
+    const {shopCartStore}=useStore()
+    const{cartQuantity}=shopCartStore
+   
     return (
         <div className="ui secondary pointing menu nav-background" >
             <NavLink to='/' className="item active">
@@ -49,4 +50,4 @@ export default function NavBar() {
         </div>
 
     )
-}
+})

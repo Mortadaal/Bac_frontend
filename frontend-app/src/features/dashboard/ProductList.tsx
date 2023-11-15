@@ -4,17 +4,17 @@ import { SyntheticEvent, useState, useEffect } from "react"; // Import useEffect
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-import { useShoppingCart } from "../shopping/ShoppingCartContext";
+
 
 
 export default observer(function ProductList() {
-  const { productStore, categoryStore } = useStore();
+  const { productStore, categoryStore,shopCartStore } = useStore();
   const { deleteProduct, productById, loading } = productStore;
   const { categoryById } = categoryStore;
 
   const [target, setTarget] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined)
-  const{getItemQuantity, increaseCartQuantity}= useShoppingCart();
+  const{getItemQuantity, increaseCartQuantity}= shopCartStore;
 
   useEffect(() => {
     if (categoryById.length > 0) {
