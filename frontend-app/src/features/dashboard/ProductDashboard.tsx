@@ -1,28 +1,39 @@
 import { Grid } from "semantic-ui-react";
-import { Products } from "../../app/models/products";
 import ProductList from "./ProductList";
-import ProductsEditDetails from "../products/details/ProductsEditDetails";
+import { useStore } from "../../app/stores/store";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import LoadingComponent from "../../app/layout/LoadingComponent";
 
-interface Props{
-    products:Products[];
-    selectedProduct:Products|undefined;
-    selectProduct:(id:number)=>void;
-    cancelSelectProduct:()=>void;
-    editMode:boolean;
-    openForm:()=>void;
-    closeForm:()=>void;
-}
 
-export default function ProductDashboard({products,selectedProduct,selectProduct,cancelSelectProduct,openForm}:Props) {
+
+
+
+
+export default observer(function ProductDashboard() {
+
+    const { productStore, categoryStore } = useStore();
+    const {loadProducts,productRegistry}=productStore;
+    const {loadCategorys,categoryRegistry}=categoryStore;
+
+    useEffect(() => {
+       if(productRegistry.size <=1) loadProducts();
+    }, [loadProducts,productRegistry.size])
+
+    useEffect(() => {
+        if(categoryRegistry.size <=1)loadCategorys();
+    }, [loadCategorys,categoryRegistry.size])
+    if(productStore.loadingInitial) return <LoadingComponent content='Indlæser Liste'/>
     return (
+
         <Grid className="DashbordGrid">
+
             <Grid.Column width={10}>
-               <ProductList products={products} selectProduct={selectProduct} openForm={openForm}/>
+                <ProductList />
             </Grid.Column>
-            <Grid.Column width={6}>
-                {selectedProduct&&
-                <ProductsEditDetails products={selectedProduct} cancleSelectProduct={cancelSelectProduct}/>}
-            </Grid.Column>
+
         </Grid>
     )
-}
+})
+
+
