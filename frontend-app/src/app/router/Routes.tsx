@@ -12,28 +12,23 @@ import QRCodeList from "../../features/qrcode/QRCodeList";
 
 
 
-
-
-
-
-
-
-
 export const routes: RouteObject[] = [
     {
+        
         path: "/",
         element:<App/>,
         children:[
-            {path:'',element:<Homepage/>},
-            {path:'menu',element:<ProductDashboard/>},
+            {path:'/',element:<Homepage/>},
+            {path:'menu/',element:<ProductDashboard/>},
+            { path: 'menu/:tableNumber', element: <ProductDashboard /> },
             {path:'bookingVip',element:<BookingForm/>},
             {path:'addProduct',element:<ProductsForm key='add'/>},
             {path:'edit/:id',element:<ProductsForm key='edit'/>},
             {path:'deleteCategory',element:<DeleteCategoryForm/>},
             {path:'addCategory',element:<CategoryForm/>},
-            {path:'cart',element:<ShoppingCart/>},
-          
-            {path:'qrcode',element:<QRCodeList initialNumberOfCodes={0} />},
+            {path:'cart/',element:<ShoppingCart/>},
+            {path:'cart/:tableNumber',element:<ShoppingCart/>},
+            {path:'qrcode',element:<QRCodeList initialNumberOfCodes={3} />},
         
         ]
     }
