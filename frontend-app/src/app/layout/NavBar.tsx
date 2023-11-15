@@ -26,6 +26,10 @@ export default observer(function NavBar() {
             <a className="item">
                 Om Os
             </a>
+            <Button as={Link} to={'/qrcode'} 
+                  className="ui circular custom-icon-button item">
+                   <i className="qrcode icon"></i>
+                </Button>
             <div className="right menu">
                 <NavLink to='/addProduct' className="ui item">
                     Add new Product
@@ -44,6 +48,8 @@ export default observer(function NavBar() {
                     <i className="shopping basket icon"></i>
                     {cartQuantity}
                 </Button>)}
+
+               
                
 
             </div>

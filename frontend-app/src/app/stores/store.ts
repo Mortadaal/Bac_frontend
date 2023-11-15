@@ -8,11 +8,14 @@ interface Store{
     productStore:ProductStore
     categoryStore:CategoryStore
     shopCartStore:ShopCartStore
+
+   
 }
 export const store:Store={
     productStore: new ProductStore(),
     categoryStore: new CategoryStore(),
     shopCartStore:new ShopCartStore(),
+
 }
 export const StoreContext = createContext(store);
 

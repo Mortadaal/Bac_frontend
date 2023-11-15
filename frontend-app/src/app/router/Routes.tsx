@@ -7,6 +7,12 @@ import ProductsForm from "../../features/products/forms/ProductsForm";
 import CategoryForm from "../../features/categorys/forms/CategoryForm";
 import DeleteCategoryForm from "../../features/categorys/forms/DeleteCategoryForm";
 import ShoppingCart from "../../features/shopping/ShoppingCart";
+import QRCodeList from "../../features/qrcode/QRCodeList";
+
+
+
+
+
 
 
 
@@ -27,6 +33,7 @@ export const routes: RouteObject[] = [
             {path:'addCategory',element:<CategoryForm/>},
             {path:'cart',element:<ShoppingCart/>},
           
+            {path:'qrcode',element:<QRCodeList initialNumberOfCodes={0} />},
         
         ]
     }

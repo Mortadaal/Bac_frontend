@@ -33,10 +33,10 @@ export function CartItem({ id, quantity }: CartItemProps) {
             <span className="price">{formatCurrency(item.productPrice * quantity)}</span>
             <span className="quantity"> x {quantity} </span>
           </div>
-
-          <Button negative icon={"minus"} onClick={() => decreaseCartQuantity(item.id)}
-          />
-
+          
+            <Button  negative icon={"minus"} onClick={() => decreaseCartQuantity(item.id)}
+            />
+          
         </div>
       </div>
 
