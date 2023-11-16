@@ -1,6 +1,7 @@
 import { Form, Formik } from "formik";
-import { Button, Input } from "semantic-ui-react";
-import MyTextInput from "../../app/common/MyTextInput";
+import { Button } from "semantic-ui-react";
+import MyTextInput from "../../app/common/form/MyTextInput";
+
 
 export default function LoginForm(){
 

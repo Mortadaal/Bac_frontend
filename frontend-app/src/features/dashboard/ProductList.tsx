@@ -72,6 +72,7 @@ export default observer(function ProductList() {
              
 
                   <Button floated="right" as={Link} to={`/edit/${product.id}`} color="grey" icon="edit"></Button>
+                  {}
                   <Button
                     name={product.id}
                     floated="left"

@@ -57,7 +57,7 @@ const Account ={
 const agent = {
     Products,
     Categorys,
-    Account
+    Account,
 };
 
 export default agent;
