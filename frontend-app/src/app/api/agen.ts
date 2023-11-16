@@ -1,6 +1,7 @@
 import axios, {AxiosResponse } from "axios";
 import { Products } from "../models/products";
 import { Category } from "../models/category";
+import { User, UserFormValues } from "../models/users";
 
 const sleep=(delay:number)=>{
     return new Promise((reslove)=>{
@@ -19,6 +20,8 @@ axios.interceptors.response.use(async response=>{
         return await Promise.reject(error);
     }
 })
+
+
 
 const responsBody=<T>(response:AxiosResponse<T>)=>response.data;
 
@@ -44,11 +47,17 @@ const Categorys={
     delete:(id:number)=>axios.delete<void>(`/category/${id}`)
     
 }
+const Account ={
+    current:()=>request.get<User>('/account'),
+    login:(user:UserFormValues)=>request.post<User>('/account/login',user),
+    register:(user:UserFormValues)=>request.post<User>('/account/register',user)
+}
 
 
 const agent = {
     Products,
-    Categorys
+    Categorys,
+    Account
 };
 
 export default agent;

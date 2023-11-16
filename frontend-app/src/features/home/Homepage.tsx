@@ -12,9 +12,16 @@ export default function Homepage() {
                     />
                 </Header>
                 <Header as='h2' inverted content='Velkommen' />
-                <Button as={Link} to='/qrcode' size="huge" inverted>
+                
+                <Button.Group>
+                    <Button positive as={Link} to='/login' content="Login"/>
+                    <Button.Or/>
+                    <Button as={Link} to='register' content="Register"/>
+                </Button.Group>
+                
+                {/* <Button as={Link} to='/qrcode' size="huge" inverted>
                     Kom til QR-code
-                </Button>
+                </Button> */}
             </Container>
         </Segment>
     )
