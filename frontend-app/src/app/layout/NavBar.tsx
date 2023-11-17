@@ -9,9 +9,10 @@ import { observer } from "mobx-react-lite";
 
 
 export default observer(function NavBar() {
-    const {shopCartStore}=useStore()
+    const {shopCartStore,userStore}=useStore()
+    const{logout}=userStore;
     const{cartQuantity}=shopCartStore
-   
+    console.log("Is user logged in?", userStore.isLoggedIn);
     return (
         <div className="ui secondary pointing menu nav-background" >
             <NavLink to='/' className="item active">
@@ -40,9 +41,12 @@ export default observer(function NavBar() {
                 <NavLink to='/deleteCategory' className="ui item">
                     Slet Kategori
                 </NavLink>
-                <a className="ui item">
-                    Logout
-                </a>
+                
+                 {userStore.isLoggedIn &&(
+                    <Button negative onClick={logout} icon='power' name='logout'/>
+                 )}
+                    
+               
                 {cartQuantity > 0 && (<Button as={Link} to={'/cart'} 
                   className="ui circular custom-icon-button item">
                     <i className="shopping basket icon"></i>

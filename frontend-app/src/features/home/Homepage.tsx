@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
 
-export default function Homepage() {
+import { observer } from "mobx-react-lite";
+import { useStore } from "../../app/stores/store";
+
+
+
+export default observer(function Homepage() {
+    const{userStore}=useStore();
     return (
         <Segment inverted textAlign="center" vertical className="masthead">
             <Container text>
@@ -11,13 +17,21 @@ export default function Homepage() {
                         style={{ width: '400px', height: '400px', marginBottom: 12 }}
                     />
                 </Header>
-                <Header as='h2' inverted content='Velkommen' />
-                
-                <Button.Group>
+                {userStore.isLoggedIn?(
+                     <>
+                        <Button as={Link} to='/frontPage' size="huge" inverted>
+                             Gå til forsiden
+                        </Button>
+                     </>
+                ):( <Button.Group>
                     <Button positive as={Link} to='/login' content="Login"/>
                     <Button.Or/>
                     <Button as={Link} to='register' content="Register"/>
-                </Button.Group>
+                </Button.Group>)}
+
+                
+                
+               
                 
                 {/* <Button as={Link} to='/qrcode' size="huge" inverted>
                     Kom til QR-code
@@ -25,4 +39,4 @@ export default function Homepage() {
             </Container>
         </Segment>
     )
-}
+})

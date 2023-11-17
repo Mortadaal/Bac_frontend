@@ -2,6 +2,7 @@ import axios, {AxiosResponse } from "axios";
 import { Products } from "../models/products";
 import { Category } from "../models/category";
 import { User, UserFormValues } from "../models/users";
+import { store } from "../stores/store";
 
 const sleep=(delay:number)=>{
     return new Promise((reslove)=>{
@@ -10,6 +11,14 @@ const sleep=(delay:number)=>{
 }
 
 axios.defaults.baseURL='http://localhost:5000/api/';
+const responsBody=<T>(response:AxiosResponse<T>)=>response.data;
+
+
+axios.interceptors.request.use(config => { 
+    const token = store.commonStore.token;
+    if (token) config.headers.Authorization = `Bearer ${token}` 
+    return config;
+})
 
 axios.interceptors.response.use(async response=>{
     try {
@@ -23,7 +32,7 @@ axios.interceptors.response.use(async response=>{
 
 
 
-const responsBody=<T>(response:AxiosResponse<T>)=>response.data;
+
 
 const request={
     get:<T>(url:string)=>axios.get<T>(url).then(responsBody),

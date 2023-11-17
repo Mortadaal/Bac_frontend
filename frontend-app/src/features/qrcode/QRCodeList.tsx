@@ -21,14 +21,35 @@ export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProp
     setQRCodeDataArray(generateQRCodeDataArray(numberOfCodes));
   }, [numberOfCodes]);
 
+  // const generateQRCodeDataArray = (count: number): QRCodeData[] => {
+  //   return Array.from({ length: count }, (_, i) => ({
+  //     id: i + 1,
+  //     table:window.localStorage.setItem('t',(i+1).toString()),
+  //     url: `${window.location.origin}/`,
+  //   }
+  //   ));
+  // };
+  
   const generateQRCodeDataArray = (count: number): QRCodeData[] => {
-    return Array.from({ length: count }, (_, i) => ({
-      id: i + 1,
-      table:window.localStorage.setItem('t',(i+1).toString()),
-      url: `${window.location.origin}/`,
-    }
-    ));
+    return Array.from({ length: count }, (_, i) => {
+      const qrCodeData: QRCodeData = {
+        id: i + 1,
+        url: `${window.location.origin}/`,
+      };
+  
+      if (i === 0) {
+       const qrCodeData = (i + 1).toString();
+        window.localStorage.setItem('t', qrCodeData);
+      }else
+      {
+        window.localStorage.removeItem('t');
+      }
+  
+      return qrCodeData;
+    });
   };
+
+
 
   const generateBase64QRCode = (_text: string) => {
     const base64ImagePlaceholder = 'base64-encoded-image-data';

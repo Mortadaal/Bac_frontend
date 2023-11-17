@@ -11,7 +11,6 @@ export default observer(function ProductList() {
   const { productStore, categoryStore,shopCartStore } = useStore();
   const { deleteProduct, productById, loading } = productStore;
   const { categoryById } = categoryStore;
-
   const [target, setTarget] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined)
   const{getItemQuantity, increaseCartQuantity}= shopCartStore;
@@ -68,11 +67,8 @@ export default observer(function ProductList() {
                     <div>{product.productDescription}</div>
                     <div>{formatCurrency(product.productPrice)}</div>
                   </Item.Description>
-                  {quantity ===0?<Button onClick={()=>increaseCartQuantity(product.id)} floated="right" circular color="green" icon="add"></Button>:null}
-             
-
+                  <Button onClick={()=>increaseCartQuantity(product.id)} floated="right" circular color="green" icon="add"></Button>
                   <Button floated="right" as={Link} to={`/edit/${product.id}`} color="grey" icon="edit"></Button>
-                  {}
                   <Button
                     name={product.id}
                     floated="left"
