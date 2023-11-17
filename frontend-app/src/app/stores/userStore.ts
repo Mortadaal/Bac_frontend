@@ -1,0 +1,32 @@
+import agent from "../api/agen";
+import { User, UserFormValues } from "../models/users";
+import { makeObservable, runInAction } from "mobx";
+import { store } from "./store";
+import { router } from "../router/Routes";
+export default class UserStore {
+    user: User | null = null;
+    tablenumber=window.localStorage.getItem('t');
+    constructor() {
+        makeObservable(this)
+    }
+
+    get isLoggedIn() {
+        return !!this.user
+    }
+
+    login = async (creds: UserFormValues) => {
+        const user = await agent.Account.login(creds);
+        store.commonStore.setToken(user.token);
+        runInAction(() => this.user = user);
+        router.navigate(`/frontPage`)
+    }
+
+    logout = () => {
+        store.commonStore.setToken(null);
+        localStorage.removeItem('jwt');
+        this.user = null;
+        router.navigate('/home')
+    }
+
+}
+

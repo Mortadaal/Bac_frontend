@@ -10,6 +10,7 @@ import ShoppingCart from "../../features/shopping/ShoppingCart";
 import QRCodeList from "../../features/qrcode/QRCodeList";
 import LoginForm from "../../features/user/LoginForm";
 import RegisterForm from "../../features/user/RegisterForm";
+import FrontPage from "../../features/FrontPage";
 
 
 
@@ -21,8 +22,9 @@ export const routes: RouteObject[] = [
         element:<App/>,
         children:[
             {path:'/',element:<Homepage/>},
+            {path:'/:tableNumber',element:<Homepage/>},
+            {path:'/frontPage',element:<FrontPage/>},
             {path:'menu/',element:<ProductDashboard/>},
-            { path: 'menu/:tableNumber', element: <ProductDashboard /> },
             {path:'bookingVip',element:<BookingForm/>},
             {path:'addProduct',element:<ProductsForm key='add'/>},
             {path:'edit/:id',element:<ProductsForm key='edit'/>},
@@ -31,7 +33,6 @@ export const routes: RouteObject[] = [
             {path:'deleteCategory',element:<DeleteCategoryForm/>},
             {path:'addCategory',element:<CategoryForm/>},
             {path:'cart/',element:<ShoppingCart/>},
-            {path:'cart/:tableNumber',element:<ShoppingCart/>},
             {path:'qrcode',element:<QRCodeList initialNumberOfCodes={3} />},
         
         ]

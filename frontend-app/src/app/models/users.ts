@@ -15,16 +15,8 @@ export interface User{
 }
 
 export interface UserFormValues{
-    userId:number;
     username:string; 
     password: string;
-    firstname:string;
-    lastname:string;
-    adresse:string;
-    city:string;
-    zipcode:string;
-    country:string;
-    birthdate:string;
-    accountType: string; 
+
 
 }

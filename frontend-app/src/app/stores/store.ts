@@ -3,6 +3,8 @@ import ProductStore from "./productStore";
 import CategoryStore from "./categoryStore";
 import ShopCartStore from "./shopCartStore";
 import QRCodeStore from "./qrCodeStore";
+import UserStore from "./userStore";
+import CommonStore from "./commonStore";
 
 
 
@@ -12,6 +14,8 @@ interface Store{
     categoryStore:CategoryStore
     shopCartStore:ShopCartStore
     qrCodeStore:QRCodeStore
+    userStore:UserStore
+    commonStore: CommonStore
    
 }
 export const store:Store={
@@ -19,6 +23,8 @@ export const store:Store={
     categoryStore: new CategoryStore(),
     shopCartStore:new ShopCartStore(),
     qrCodeStore: new QRCodeStore(),
+    userStore: new UserStore(),
+    commonStore: new CommonStore(),
 
 }
 export const StoreContext = createContext(store);

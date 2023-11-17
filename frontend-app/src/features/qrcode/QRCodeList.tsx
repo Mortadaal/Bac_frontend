@@ -24,8 +24,10 @@ export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProp
   const generateQRCodeDataArray = (count: number): QRCodeData[] => {
     return Array.from({ length: count }, (_, i) => ({
       id: i + 1,
-      url: `${window.location.origin}/menu/${i + 1}`,
-    }));
+      table:window.localStorage.setItem('t',(i+1).toString()),
+      url: `${window.location.origin}/`,
+    }
+    ));
   };
 
   const generateBase64QRCode = (_text: string) => {
@@ -44,7 +46,8 @@ export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProp
   };
 
   const handleQRCodeClick = (tableNumber: number) => {
-    navigate(`/menu/${tableNumber}`);
+    window.localStorage.setItem('t',tableNumber.toString());
+    navigate('/');
   };
 
   return (
