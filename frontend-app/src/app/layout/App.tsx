@@ -11,16 +11,17 @@ import LoadingComponent from './LoadingComponent';
 
 function App() {
   const location = useLocation();
-  const {userStore,commonStore}=useStore();
+  const {commonStore,userStore}=useStore();
 
   useEffect(()=>{
     if(commonStore.token){
-      userStore.getUser().finally(()=>commonStore.setAppLoaded)
+      userStore.getUser().finally(()=>commonStore.setAppLoaded())
     }else{
       commonStore.setAppLoaded()
     }
   },[commonStore,userStore])
 if(!commonStore.appLoaded)return <LoadingComponent content='Loader siden ....'/>
+
   return (
     <>
       {location.pathname === '/' ? <Homepage /> : (

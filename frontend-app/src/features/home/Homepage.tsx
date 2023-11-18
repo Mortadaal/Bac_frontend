@@ -28,14 +28,6 @@ export default observer(function Homepage() {
                     <Button.Or/>
                     <Button as={Link} to='register' content="Register"/>
                 </Button.Group>)}
-
-                
-                
-               
-                
-                {/* <Button as={Link} to='/qrcode' size="huge" inverted>
-                    Kom til QR-code
-                </Button> */}
             </Container>
         </Segment>
     )
