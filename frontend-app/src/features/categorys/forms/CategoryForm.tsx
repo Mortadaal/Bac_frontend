@@ -2,12 +2,12 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import { Button, Form, Segment } from "semantic-ui-react";
 import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default observer( function CategoryForm() {
     const {categoryStore}=useStore();
     const {createCategory,categoryLoading,selectedCategory,closeCategoryForm}=categoryStore;
-    
+    const navigate = useNavigate();
     const initialState = selectedCategory||{
 
         id: 0,
@@ -23,7 +23,7 @@ export default observer( function CategoryForm() {
         setCategorys({ ...categorys, [name]: value });
     }
     function handleSubmit() {
-        createCategory(categorys);
+        createCategory(categorys).then(()=>navigate('/menu'));
      }
      
     return(

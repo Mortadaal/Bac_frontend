@@ -31,7 +31,9 @@ export default observer(function NavBar() {
                   className="ui circular custom-icon-button item">
                    <i className="qrcode icon"></i>
                 </Button>
+
             <div className="right menu">
+                
                 <NavLink to='/addProduct' className="ui item">
                     Add new Product
                 </NavLink>

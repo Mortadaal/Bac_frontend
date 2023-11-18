@@ -12,29 +12,66 @@ export default class ProductStore {
     constructor() {
         makeAutoObservable(this)
     }
+    // get productById() {
+    //     return Array.from(this.productRegistry.values())
+    //     .sort((a, b) => a.productPrice - b.productPrice);
+    // };
+
+    // loadProducts = async () => {
+    //     this.setLoadingInitial(true);
+    //     try {
+    //         const products = await agent.Products.list();
+          
+    //             products.forEach((product) => {
+    //                 this.setProduct(product);
+    //                 this.setLoadingInitial(false);
+    //         })
+
+    //     } catch (error) {
+    //         console.log(error);
+        
+    //         this.setLoadingInitial(false);
+            
+
+    //     }
+    // }
+
     get productById() {
-        return Array.from(this.productRegistry.values())
-        .sort((a, b) => a.productPrice - b.productPrice);
-    };
+        return Array.from(this.productRegistry.values()).sort((a, b) => a.productPrice - b.productPrice);
+    }
 
     loadProducts = async () => {
         this.setLoadingInitial(true);
         try {
             const products = await agent.Products.list();
-          
-                products.forEach((product) => {
-                    this.setProduct(product);
-                    this.setLoadingInitial(false);
-            })
+
+            runInAction(() => {
+                if (products.length === 0) {
+                    const defaultProduct: Products = {
+                        id: 0,
+                        productName: 'Default Product',
+                        productPrice: 0,
+                        productDescription: 'Default Description',
+                        imageUrl: 'default-image-url.jpg',
+                        onStock: false,
+                        categoryId: 1,
+                    };
+                    this.setProduct(defaultProduct);
+                } else {
+                    products.forEach((product) => {
+                        this.setProduct(product);
+                    });
+                }
+                this.setLoadingInitial(false);
+            });
 
         } catch (error) {
             console.log(error);
-        
-            this.setLoadingInitial(false);
-            
 
+            this.setLoadingInitial(false);
         }
     }
+
 
     loadProduct=async(id:number)=>{
        

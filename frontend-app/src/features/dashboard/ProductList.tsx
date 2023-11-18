@@ -13,7 +13,7 @@ export default observer(function ProductList() {
   const { categoryById } = categoryStore;
   const [target, setTarget] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<number | undefined>(undefined)
-  const{getItemQuantity, increaseCartQuantity}= shopCartStore;
+  const{increaseCartQuantity}= shopCartStore;
 
   useEffect(() => {
     if (categoryById.length > 0) {
@@ -34,8 +34,6 @@ export default observer(function ProductList() {
   const filteredProducts = selectedCategory
     ? productById.filter((product) => product.categoryId === selectedCategory)
     : productById;
-
-    const quantity=getItemQuantity(1);
 
   return (
     <div className="ui grid">

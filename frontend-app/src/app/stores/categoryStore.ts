@@ -7,31 +7,64 @@ export default class CategoryStore{
     selectedCategory: Category | undefined = undefined;
     editModeCategory = false;
     editModeDeleteCategory=false;
-    loadingInitialCategory = true;
+    loadingInitial = true;
     categoryLoading = false;
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    get categoryById() {
-        return Array.from(this.categoryRegistry.values())
-        .sort((a, b) => a.id - b.id);
-    };
-    loadCategorys=async()=>{
-        try {
-            const categorys = await agent.Categorys.list();
-            runInAction(() => {
-                categorys.forEach((category) => {
-                    this.categoryRegistry.set(category.id, category);
-                });
-                this.loadingInitialCategory = false;
-            })
+    // get categoryById() {
+    //     return Array.from(this.categoryRegistry.values())
+    //     .sort((a, b) => a.id - b.id);
+    // };
 
+    
+
+    // loadCategorys=async()=>{
+        
+    //     try {
+    //         const categorys = await agent.Categorys.list();
+    //         console.log(categorys);
+    //         runInAction(() => {
+    //             categorys.forEach((category) => {
+    //                 this.categoryRegistry.set(category.id, category);
+    
+    //             });
+    //             this.loadingInitialCategory = false;
+    //         })
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // }
+
+    get categoryById() {
+        return Array.from(this.categoryRegistry.values()).sort((a, b) => a.id - b.id);
+      }
+    
+      loadCategorys = async () => {
+        this.setLoadingInitial(true);
+        try {
+          const categorys = await agent.Categorys.list();
+          console.log(categorys);
+          runInAction(() => {
+            if (categorys.length === 0) {
+              // If categories are empty, set a default category named "test"
+              const defaultCategory: Category = { id: 1, categoryName: 'Test Category' };
+              this.categoryRegistry.set(defaultCategory.id, defaultCategory);
+            } else {
+              categorys.forEach((category) => {
+                this.categoryRegistry.set(category.id, category);
+              });
+            }
+            this.setLoadingInitial(false)
+          });
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
-    }
+      }
+
     createCategory=async(category:Category)=>{
         this.categoryLoading=true;
         category.id=category.id;
@@ -39,8 +72,8 @@ export default class CategoryStore{
             await agent.Categorys.create(category);
             runInAction(()=>{
                 this.categoryRegistry.set(category.id, category);
-                this.editModeCategory=false;
                 this.categoryLoading=false;
+                console.log(category);
             })
         } catch (error) {
             console.log(error);
@@ -64,7 +97,10 @@ export default class CategoryStore{
         
         this.editModeDeleteCategory=true;
     }
-    
+    setLoadingInitial = (state: boolean) => {
+        this.loadingInitial = state;
+    }
+  
     closeCategoryForm=()=>{
         this.editModeCategory=false;
     }

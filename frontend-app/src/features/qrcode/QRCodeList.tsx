@@ -1,7 +1,8 @@
 import QRCode from 'qrcode.react';
 import { useState, useEffect } from 'react';
-import { Card, Container, Button } from 'semantic-ui-react';
+import { Card, Container, Button, Segment, Grid, Item } from 'semantic-ui-react';
 import { useNavigate } from 'react-router-dom';
+
 
 interface QRCodeGeneratorProps {
   initialNumberOfCodes: number;
@@ -21,40 +22,24 @@ export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProp
     setQRCodeDataArray(generateQRCodeDataArray(numberOfCodes));
   }, [numberOfCodes]);
 
-  // const generateQRCodeDataArray = (count: number): QRCodeData[] => {
-  //   return Array.from({ length: count }, (_, i) => ({
-  //     id: i + 1,
-  //     table:window.localStorage.setItem('t',(i+1).toString()),
-  //     url: `${window.location.origin}/`,
-  //   }
-  //   ));
-  // };
-  
   const generateQRCodeDataArray = (count: number): QRCodeData[] => {
     return Array.from({ length: count }, (_, i) => {
       const qrCodeData: QRCodeData = {
         id: i + 1,
         url: `${window.location.origin}/`,
       };
-  
+
       if (i === 0) {
-       const qrCodeData = (i + 1).toString();
+        const qrCodeData = (i + 1).toString();
         window.localStorage.setItem('t', qrCodeData);
-      }else
-      {
+      } else {
         window.localStorage.removeItem('t');
       }
-  
+
       return qrCodeData;
     });
   };
 
-
-
-  const generateBase64QRCode = (_text: string) => {
-    const base64ImagePlaceholder = 'base64-encoded-image-data';
-    return base64ImagePlaceholder;
-  };
 
   const handleAddQRCode = () => {
     setNumberOfCodes((prev) => prev + 1);
@@ -66,43 +51,36 @@ export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProp
     }
   };
 
-  const handleQRCodeClick = (tableNumber: number) => {
-    window.localStorage.setItem('t',tableNumber.toString());
-    navigate('/');
-  };
-
   return (
-    <Container>
-      <div>
-        <Button primary onClick={handleAddQRCode}>
-          Add QR Code
-        </Button>
-        <Button secondary onClick={handleRemoveQRCode}>
-          Remove QR Code
-        </Button>
-      </div>
-      <Card.Group>
-        {qrCodeDataArray.map((qrCodeData) => (
-          <Card key={qrCodeData.id} onClick={() => handleQRCodeClick(qrCodeData.id)}>
-            <Card.Content>
-              <Card.Header>Table {qrCodeData.id}</Card.Header>
-              <Card.Description>
-                <QRCode value={qrCodeData.url} size={128} />
-              </Card.Description>
-            </Card.Content>
-            <Card.Content extra>
-              <Button
-                primary
-                as="a"
-                href={`data:image/png;base64,${generateBase64QRCode(`Table ${qrCodeData.id}`)}`}
-                download={`qrcode_table_${qrCodeData.id}.png`}
-              >
-                Download QR Code
+    <Segment >
+      <Grid stackable columns={2}>
+        <Grid.Column >
+        <Button.Group >
+              <Button primary onClick={handleAddQRCode} content='Add QR Code'>
               </Button>
-            </Card.Content>
-          </Card>
-        ))}
-      </Card.Group>
-    </Container>
+              <Button.Or />
+              <Button secondary onClick={handleRemoveQRCode} content='Remove QR Code'>
+              </Button>
+            </Button.Group>
+        </Grid.Column>
+        
+        <Item>
+          <Item.Content>
+            <Card.Group>
+              {qrCodeDataArray.map((qrCodeData) => (
+                <Card >
+                  <Card.Content>
+                    <Card.Header style={{ textAlign: 'center' }}>Table {qrCodeData.id}</Card.Header>
+                    <Card.Description>
+                      <QRCode value={qrCodeData.url} size={250} />
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              ))}
+            </Card.Group>
+          </Item.Content>
+        </Item>
+      </Grid>
+    </Segment>
   );
 }

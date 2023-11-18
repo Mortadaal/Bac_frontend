@@ -10,13 +10,13 @@ const sleep=(delay:number)=>{
     })
 }
 
-axios.defaults.baseURL='http://localhost:5000/api/';
+axios.defaults.baseURL='http://localhost:5000/api';
 
-
+const responsBody=<T>(response:AxiosResponse<T>)=>response.data;
 
 axios.interceptors.request.use(config => { 
     const token = store.commonStore.token;
-    if (token) config.headers.Authorization = `Bearer ${token}` 
+    if (token && config.headers) config.headers.Authorization = `Bearer ${token}` 
     return config;
 })
 
@@ -29,7 +29,6 @@ axios.interceptors.response.use(async response=>{
         return await Promise.reject(error);
     }
 })
-const responsBody=<T>(response:AxiosResponse<T>)=>response.data;
 
 
 
@@ -43,14 +42,14 @@ const request={
 
 
 const Products={
-    list:()=>request.get<Products[]>('products'),
+    list:()=>request.get<Products[]>('/products'),
     details: (id:number)=>request.get<Products>(`/products/${id}`),
     create:(product:Products)=>request.post<void>('products/addProduct',product),
     update:(product:Products)=>request.put<void>(`/products/editProduct/${product.id}`,product),
     delete:(id:number)=>request.del<void>(`/products/${id}`)
 };
 const Categorys={
-    list:()=>request.get<Category[]>('category'),
+    list:()=>request.get<Category[]>('/category'),
     create:(category:Category)=>axios.post<void>('category/addCategory',category),
     // delete:(categoryName:string)=>axios.delete<void>(`/category/${categoryName}`)
     delete:(id:number)=>axios.delete<void>(`/category/${id}`)
