@@ -1,6 +1,7 @@
 import { Container, Header, Segment } from "semantic-ui-react";
 
 export default function FrontPage() {
+  
     return (
         <Segment inverted textAlign="center" vertical className="masthead">
             <Container text>

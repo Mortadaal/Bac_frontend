@@ -12,6 +12,8 @@ export function CartItem({ id, quantity }: CartItemProps) {
   const { productById } = productStore;
   const { decreaseCartQuantity } = shopCartStore;
   const item = productById.find((i) => i.id === id);
+
+
   if (item == null) return null;
 
   return (
@@ -42,5 +44,25 @@ export function CartItem({ id, quantity }: CartItemProps) {
         </Grid.Row>
       </Grid>
     </Segment>
+  );
+}
+
+export function CartSummary() {
+  const { shopCartStore } = useStore();
+  const { cartItems } = shopCartStore;
+  const { productStore } = useStore();
+
+  const totalCartPrice = cartItems.reduce((total, item) => {
+    const product = productStore.productById.find((i) => i.id === item.id);
+    if (product) {
+      total += product.productPrice * item.quantity;
+    }
+    return total;
+  }, 0);
+
+  return (
+    <div>
+      <h2>Total Price: {formatCurrency(totalCartPrice)}</h2>
+    </div>
   );
 }

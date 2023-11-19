@@ -24,7 +24,6 @@ export default class CategoryStore {
   loadCategorys = async () => {
     try {
       const categorys = await agent.Categorys.list();
-      console.log(categorys);
       runInAction(() => {
         categorys.forEach((category) => {
           this.categoryRegistry.set(category.id, category);
@@ -35,32 +34,6 @@ export default class CategoryStore {
       console.log(error);
     }
   };
-
-  // get categoryById() {
-  //     return Array.from(this.categoryRegistry.values()).sort((a, b) => a.id - b.id);
-  //   }
-
-  //   loadCategorys = async () => {
-  //     this.setLoadingInitial(true);
-  //     try {
-  //       const categorys = await agent.Categorys.list();
-  //       console.log(categorys);
-  //       runInAction(() => {
-  //         if (categorys.length === 0) {
-  //           // If categories are empty, set a default category named "test"
-  //           const defaultCategory: Category = { id: 1, categoryName: 'Test Category' };
-  //           this.categoryRegistry.set(defaultCategory.id, defaultCategory);
-  //         } else {
-  //           categorys.forEach((category) => {
-  //             this.categoryRegistry.set(category.id, category);
-  //           });
-  //         }
-  //         this.setLoadingInitial(false)
-  //       });
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
 
   createCategory = async (category: Category) => {
     this.categoryLoading = true;

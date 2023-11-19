@@ -10,7 +10,7 @@ export interface User {
     zipcode: string;
     country: string;
     birthdate: string;
-    appUserRoles: string;
+    role: string;
 
 
 }

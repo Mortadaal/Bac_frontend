@@ -4,8 +4,9 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 
 export default observer(function ShoppingCart() {
-  const { shopCartStore, productStore } = useStore();
+  const { shopCartStore, productStore,userStore} = useStore();
   const { cartItems } = shopCartStore;
+
   const handleSetOrder = () => {
     const orderlist = cartItems.map((cartItem) => {
       const { id, quantity } = cartItem;

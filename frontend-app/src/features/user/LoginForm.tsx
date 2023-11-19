@@ -13,13 +13,13 @@ export default observer(function LoginForm(){
     const validationSchema = Yup.object({
         username: Yup.string().required("BrugerNavn må ikke være tom!"),
         password: Yup.string().required("Der Skal indtastes en kodeord!"),
-       
+        role: Yup.string()
       });
 
     return(
 
 <Formik validationSchema={validationSchema} 
-initialValues={{username:'',password:'',error:null}}
+initialValues={{username:'',password:'',role:'',error:null}}
  onSubmit={(values ,{setErrors})=>userStore.login(values).catch(error=>setErrors({error:'Forkert BrugereNavn eller kode!'}))}
  >
 

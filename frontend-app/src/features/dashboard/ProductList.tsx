@@ -5,8 +5,9 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 
+
 export default observer(function ProductList() {
-  const { productStore, categoryStore, shopCartStore } = useStore();
+  const { productStore, categoryStore, shopCartStore,userStore } = useStore();
   const { deleteProduct, productById, loading } = productStore;
   const { categoryById } = categoryStore;
   const [target, setTarget] = useState("");
@@ -74,20 +75,23 @@ export default observer(function ProductList() {
                       <div>{product.productDescription}</div>
                       <div>{formatCurrency(product.productPrice)}</div>
                     </Item.Description>
+                    {userStore.isLoggedIn && (
                     <Button
                       onClick={() => increaseCartQuantity(product.id)}
                       floated="right"
                       circular
                       color="green"
                       icon="add"
-                    ></Button>
+                    ></Button>)}
+                      {userStore._userRole==='Admin' && (
                     <Button
                       floated="right"
                       as={Link}
                       to={`/edit/${product.id}`}
                       color="grey"
                       icon="edit"
-                    ></Button>
+                    ></Button>)}
+                    {userStore._userRole==='Admin' && (
                     <Button
                       name={product.id}
                       floated="left"
@@ -95,7 +99,7 @@ export default observer(function ProductList() {
                       onClick={(e) => handleProductDelete(e, product.id)}
                       color="red"
                       content="Delete"
-                    ></Button>
+                    ></Button>)}
                     {!product.onStock ? (
                       <h3 className="text-secondary">Udsolgt</h3>
                     ) : null}

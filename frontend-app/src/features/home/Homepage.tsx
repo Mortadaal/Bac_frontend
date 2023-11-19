@@ -24,6 +24,9 @@ export default observer(function Homepage() {
             style={{ width: "400px", height: "400px", marginBottom: 12 }}
           />
         </Header>
+        <Header inverted>
+        <Button  as={Link} to='menu' content='Gå Til Menu'/>
+        </Header>
         {userStore.isLoggedIn ? (
           <>
             <Button as={Link} to="/frontPage" size="huge" inverted>
@@ -32,11 +35,13 @@ export default observer(function Homepage() {
           </>
         ) : (
           <Button.Group>
-            <Button positive as={Link} to="/login" content="Login" />
+            <Button positive as={Link} to="/login" size="huge" content="Login" />
             <Button.Or />
-            <Button as={Link} to="register" content="Register" />
+            <Button as={Link} to="register" size="huge" content="Register" />
           </Button.Group>
+          
         )}
+       
       </Container>
     </Segment>
   );

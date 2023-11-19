@@ -26,9 +26,9 @@ if(!commonStore.appLoaded)return <LoadingComponent content='Loader siden ....'/>
     <>
       {location.pathname === '/' ? <Homepage /> : (
         <>
-          {userStore.isLoggedIn?(
+      
           <NavBar />
-          ):null}
+        
           <Container style={{ marginTop: '7em' }}>
             <Outlet />
           </Container>

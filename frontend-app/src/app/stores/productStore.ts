@@ -22,8 +22,6 @@ export default class ProductStore {
     this.setLoadingInitial(true);
     try {
       const products = await agent.Products.list();
-      console.log("dwadwa", products);
-
       products.forEach((product) => {
         this.setProduct(product);
         this.setLoadingInitial(false);
