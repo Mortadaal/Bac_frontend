@@ -4,37 +4,36 @@ import { makeObservable, runInAction } from "mobx";
 import { store } from "./store";
 import { router } from "../router/Routes";
 export default class UserStore {
-    user: User | null = null;
+  user: User | null = null;
 
-    constructor() {
-        makeObservable(this)
-    }
+  constructor() {
+    makeObservable(this);
+  }
 
-    get isLoggedIn() {
-        return !!this.user
-    }
+  get isLoggedIn() {
+    return !!this.user;
+  }
 
-    login = async (creds: UserFormValues) => {
-        const user = await agent.Account.login(creds);
-        store.commonStore.setToken(user.token);
-        runInAction(() => this.user = user);
-        router.navigate('/')
-    }
+  login = async (creds: UserFormValues) => {
+    const user = await agent.Account.login(creds);
+    store.commonStore.setToken(user.token);
+    runInAction(() => (this.user = user));
+    router.navigate("/");
+  };
 
-    logout = () => {
-        store.commonStore.setToken(null);
-        localStorage.removeItem('t');
-        this.user = null;
-        router.navigate('/')
-    }
+  logout = () => {
+    store.commonStore.setToken(null);
+    localStorage.removeItem("tablenumber");
+    this.user = null;
+    router.navigate("/");
+  };
 
-    getUser = async () => {
-        try {
-            const user = await agent.Account.current();
-            runInAction(() => this.user = user);
-        } catch (error) {
-            console.log(error);
-        }
+  getUser = async () => {
+    try {
+      const user = await agent.Account.current();
+      runInAction(() => (this.user = user));
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
-

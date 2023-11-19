@@ -135,7 +135,7 @@ useEffect(()=>{
                 <Form.Field
                     control={Select}
                     label='Valg af Kategori'
-                    options={(Array.isArray(categoryStore.categoryById) ? categoryStore.categoryById : [categoryStore.categoryById]).map((cat) => ({
+                    options={categoryStore.categoryById.map((cat) => ({
                         key: cat.id,
                         text: cat.categoryName,
                         value: cat.id,
