@@ -16,10 +16,10 @@ export default observer(function NavBar() {
 
     return (
         <div className="ui secondary pointing menu nav-background" >
-            <NavLink to='/' className="item active">
+            <NavLink to='/' className="ui item active">
                 The Duse Cafe
             </NavLink>
-            <NavLink to='/menu' className="item">
+            <NavLink to='/menu' className="ui item">
                 Menu
             </NavLink>
             {_userRole === "Admin" && (

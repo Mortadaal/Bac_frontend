@@ -20,15 +20,33 @@ axios.interceptors.request.use(config => {
     return config;
 })
 
-axios.interceptors.response.use(async response=>{
-    try {
-        await sleep(1000);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return await Promise.reject(error);
+axios.interceptors.response.use(
+  async (response) => {
+    await sleep(1000);
+    return response;
+  },
+  (error) => {
+    const { response } = error;
+
+    if (response) {
+     
+      if (response.status === 401) {
+        
+      }
+      return Promise.reject(response.data);
+    } else if (error.request) {
+    
+      console.error('Request error:', error.request);
+
+      return Promise.reject('Network error. Please try again.');
+    } else {
+     
+      console.error('Error message:', error.message);
+
+      return Promise.reject('An unexpected error occurred. Please try again.');
     }
-})
+  }
+);
 
 
 

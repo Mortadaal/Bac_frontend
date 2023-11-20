@@ -20,15 +20,15 @@ export default observer(function LoginForm(){
 
 <Formik validationSchema={validationSchema} 
 initialValues={{username:'',password:'',role:'',error:null}}
- onSubmit={(values ,{setErrors})=>userStore.login(values).catch(error=>setErrors({error:'Forkert BrugereNavn eller kode!'}))}
+ onSubmit={(values ,{setErrors})=>userStore.login(values).catch(error=>setErrors({error:error}))}
  >
 
 {({handleSubmit,isSubmitting,errors})=>(
     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
         <MyTextInput placeholder="UserName" name='username'/>
         <MyTextInput placeholder="Password" name='password' type="password"/>
-        <ErrorMessage name="error" render={()=> <Label style={{marginBottom:10}} basic color="red" content={errors.error}  />}/>
-        <Button positive content='Login' type="submit"  fluid/>
+        <ErrorMessage name="error" render={()=> <Label style={{marginBottom:10}} basic color="red" content={errors.error} />}/>
+        <Button positive loading={isSubmitting} content='Login' type="submit"  fluid/>
     </Form>
 )}
 

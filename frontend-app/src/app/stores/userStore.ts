@@ -45,9 +45,9 @@ export default class UserStore {
   register = async (values: UserFormValues) => {
     try {
       await agent.Account.register(values);
-      router.navigate("/");
+      router.navigate("/login");
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
   private loadUserRoleFromToken = () => {
