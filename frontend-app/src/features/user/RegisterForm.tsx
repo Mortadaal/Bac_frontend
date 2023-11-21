@@ -4,13 +4,16 @@ import * as Yup from "yup";
 import MyTextInput from "../../app/common/form/MyTextInput";
 import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
 
 
 
 export default observer( function RegisterForm() {
+
   const {userStore} = useStore();
   const validationSchema = Yup.object({
-    username: Yup.string().required("BrugerNavn må ikke være tom!"),
+    username:Yup.string().matches(/^[A-Z]+$/, "Skal være med stort")
+    .required(),
     firstName: Yup.string().required("ForNavn må ikke være tom!"),
     lastName: Yup.string().required("EfterNavn må ikke være tom!"),
     adresse: Yup.string().required("Adresse må ikke være tom!"),

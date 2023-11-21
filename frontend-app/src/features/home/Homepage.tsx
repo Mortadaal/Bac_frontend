@@ -24,9 +24,12 @@ export default observer(function Homepage() {
             style={{ width: "400px", height: "400px", marginBottom: 12 }}
           />
         </Header>
-        <Header inverted>
+       {!userStore.isLoggedIn ? ( 
+       <Header inverted>
+        
         <Button  as={Link} to='menu' content='Gå Til Menu'/>
         </Header>
+        ):null}
         {userStore.isLoggedIn ? (
           <>
             <Button as={Link} to="/frontPage" size="huge" inverted>
