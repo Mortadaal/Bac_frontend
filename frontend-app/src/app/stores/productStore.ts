@@ -8,6 +8,7 @@ export default class ProductStore {
   editMode = false;
   loading = false;
   loadingInitial = false;
+ 
 
   constructor() {
     makeAutoObservable(this);

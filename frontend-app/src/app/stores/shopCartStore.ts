@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { CartItem } from "../../features/shopping/CartItems";
 
+
 export interface CartItem {
     id: number;
     quantity: number;
@@ -8,6 +9,7 @@ export interface CartItem {
 
 export default class ShopCartStore{
     cartItems: CartItem[] = [];
+  
     constructor() {
         makeObservable(this, {
           cartItems: observable,
@@ -47,6 +49,9 @@ export default class ShopCartStore{
     removeCartQuantity = (id: number) => {
     this.cartItems = this.cartItems.filter((item) => item.id !== id);
   };
+  
+
+
 }
 
 

@@ -3,6 +3,7 @@ import { Products } from "../models/products";
 import { Category } from "../models/category";
 import { User, UserFormValues } from "../models/users";
 import { store } from "../stores/store";
+import { OrderWithTableNumber } from "../models/orderlist";
 
 const sleep=(delay:number)=>{
     return new Promise((reslove)=>{
@@ -78,12 +79,18 @@ const Account ={
     login:(user:UserFormValues)=>request.post<User>('/account/login',user),
     register:(user:UserFormValues)=>request.post<User>('/account/register',user)
 }
+const Order={
+ 
+ 
+  create:(orderlist:OrderWithTableNumber)=>request.post<void>('orderlist/addOrder',orderlist)
 
+};
 
 const agent = {
     Products,
     Categorys,
     Account,
+    Order
 };
 
 export default agent;
