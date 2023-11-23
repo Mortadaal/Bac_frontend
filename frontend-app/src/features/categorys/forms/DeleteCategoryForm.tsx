@@ -2,12 +2,12 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
 import { Button, Form, Segment, Select } from "semantic-ui-react";
 import {  useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default observer(function DeleteCategoryForm() {
     const { categoryStore } = useStore();
     const { deleteCategory, categoryLoading, selectedCategory } = categoryStore;
-
+    const navigate = useNavigate();
     const initialState = selectedCategory || {
 
         id: 0,
@@ -23,7 +23,7 @@ export default observer(function DeleteCategoryForm() {
         setCategorys({ ...categorys, [name]: value });
     }
     function handleSubmit() {
-        deleteCategory(categorys.id);
+        deleteCategory(categorys.id).then(()=>navigate('/menu'));
     }
 
     return (

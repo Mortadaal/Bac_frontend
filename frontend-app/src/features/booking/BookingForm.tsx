@@ -1,7 +1,7 @@
 
 import { Segment, Form, Input, Button, Label } from 'semantic-ui-react';
 
-export default function BookingForm(){
+export default function BookingForm() {
   return (
     <Segment>
       <Form >
@@ -10,7 +10,7 @@ export default function BookingForm(){
           <Input
             type="number"
             name="roomNr"
-           
+
             required
           />
         </Form.Field>
@@ -19,7 +19,7 @@ export default function BookingForm(){
           <Input
             type="date"
             name="bookingDate"
-            
+
             required
           />
         </Form.Field>
@@ -30,7 +30,7 @@ export default function BookingForm(){
               type="time"
               name="startTime"
               min='16:00'
-            max='00:00'
+              max='00:00'
               required
             />
           </Form.Field>
@@ -39,8 +39,8 @@ export default function BookingForm(){
             <Input
               type="time"
               name="endTime"
-            min='17:15'
-            max='02:00'
+              min='17:15'
+              max='02:00'
               required
             />
           </Form.Field>

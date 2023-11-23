@@ -1,13 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../../app/stores/store";
-import { Button, Form, Segment } from "semantic-ui-react";
+import { Button, Form, Label, Segment } from "semantic-ui-react";
 import { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default observer( function CategoryForm() {
     const {categoryStore}=useStore();
     const {createCategory,categoryLoading,selectedCategory,closeCategoryForm}=categoryStore;
-    
+    const navigate = useNavigate();
+    const [message, setMessage] = useState('');
     const initialState = selectedCategory||{
 
         id: 0,
@@ -22,9 +23,19 @@ export default observer( function CategoryForm() {
         const {name,value}=event.target;
         setCategorys({ ...categorys, [name]: value });
     }
+    
     function handleSubmit() {
-        createCategory(categorys);
-     }
+        createCategory(categorys)
+          .then(() => {
+            setMessage('Kategori oprettet !');
+            // You can clear the message after a certain time if needed
+            setTimeout(() => setMessage(''), 5000);
+          })
+          .catch((error) => {
+            setMessage(`Kunne ikke Oprette: ${error.message}`);
+          });
+      }
+    
      
     return(
         <Segment clearing>
@@ -40,6 +51,8 @@ export default observer( function CategoryForm() {
                     <Button.Or />
                     <Button loading={categoryLoading} positive type='submit' content='Opret' />
                 </Button.Group>
+                
+                {message && <p>{message}</p>}
                 
              </Form>
         </Segment>

@@ -1,48 +1,35 @@
-import QRCode from 'qrcode.react';
-import { useState } from 'react';
-import { Card, Container, Button } from 'semantic-ui-react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import QRCode from "qrcode.react";
+import { useState, useEffect } from "react";
+import { Card, Button, Segment, Grid, Item } from "semantic-ui-react";
 
 interface QRCodeGeneratorProps {
   initialNumberOfCodes: number;
 }
 
-export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProps) {
-  const navigate = useNavigate(); // Initialize navigate from react-router-dom
+interface QRCodeData {
+  id: number;
+  url: string;
+}
+
+export default function QRCodeList({
+  initialNumberOfCodes,
+}: QRCodeGeneratorProps) {
   const [numberOfCodes, setNumberOfCodes] = useState(initialNumberOfCodes);
+  const [qrCodeDataArray, setQRCodeDataArray] = useState<QRCodeData[]>([]);
 
-  const generateQRCodeArray = (count: number) => {
-    const qrCodes = [];
+  useEffect(() => {
+    setQRCodeDataArray(generateQRCodeDataArray(numberOfCodes));
+  }, [numberOfCodes]);
 
-    for (let i = 1; i <= count; i++) {
-      qrCodes.push(
-        <Card key={i} onClick={() => handleQRCodeClick(i)}>
-          <Card.Content>
-            <Card.Header>Table {i}</Card.Header>
-            <Card.Description>
-              <QRCode value={`Table ${i}`} size={128} />
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <Button
-              primary
-              as="a"
-              href={`data:image/png;base64,${generateBase64QRCode(`Table ${i}`)}`}
-              download={`qrcode_table_${i}.png`}
-            >
-              Download QR Code
-            </Button>
-          </Card.Content>
-        </Card>
-      );
-    }
-
-    return qrCodes;
-  };
-
-  const generateBase64QRCode = (_text: string) => {
-    const base64ImagePlaceholder = 'base64-encoded-image-data';
-    return base64ImagePlaceholder;
+  const generateQRCodeDataArray = (count: number): QRCodeData[] => {
+    return Array.from({ length: count }, (_, i) => {
+      const tableNumber = i + 1;
+      const qrCodeData: QRCodeData = {
+        id: tableNumber,
+        url: `${window.location.origin}/?table=${tableNumber}`,
+      };
+      return qrCodeData;
+    });
   };
 
   const handleAddQRCode = () => {
@@ -55,22 +42,43 @@ export default function QRCodeList({ initialNumberOfCodes }: QRCodeGeneratorProp
     }
   };
 
-  const handleQRCodeClick = (tableNumber: number) => {
-    // Redirect to the specified route when a QR code is clicked
-    navigate(`/menu/${tableNumber}`);
-  };
-
   return (
-    <Container>
-      <div>
-        <Button primary onClick={handleAddQRCode}>
-          Add QR Code
-        </Button>
-        <Button secondary onClick={handleRemoveQRCode}>
-          Remove QR Code
-        </Button>
-      </div>
-      <Card.Group>{generateQRCodeArray(numberOfCodes)}</Card.Group>
-    </Container>
+    <Segment>
+      <Grid stackable columns={2}>
+        <Grid.Column>
+          <Button.Group>
+            <Button
+              primary
+              onClick={handleAddQRCode}
+              content="Add QR Code"
+            ></Button>
+            <Button.Or />
+            <Button
+              secondary
+              onClick={handleRemoveQRCode}
+              content="Remove QR Code"
+            ></Button>
+          </Button.Group>
+        </Grid.Column>
+        <Item>
+          <Item.Content>
+            <Card.Group>
+              {qrCodeDataArray.map((qrCodeData) => (
+                <Card>
+                  <Card.Content>
+                    <Card.Header style={{ textAlign: "center" }}>
+                      Table {qrCodeData.id}
+                    </Card.Header>
+                    <Card.Description>
+                      <QRCode value={qrCodeData.url} size={250} />
+                    </Card.Description>
+                  </Card.Content>
+                </Card>
+              ))}
+            </Card.Group>
+          </Item.Content>
+        </Item>
+      </Grid>
+    </Segment>
   );
 }
