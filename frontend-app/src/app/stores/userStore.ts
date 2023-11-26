@@ -1,5 +1,5 @@
-import agent from "../api/agen";
-import { User, UserFormValues } from "../models/users";
+import agent from "../api/agent";
+import { User, LoginFormValues, RegisterFormValues } from "../models/users";
 import { makeObservable, runInAction } from "mobx";
 import { store } from "./store";
 import { router } from "../router/Routes";
@@ -15,12 +15,11 @@ export default class UserStore {
     this.loadUserRoleFromToken();
   }
 
-
   get isLoggedIn() {
     return !!this.user;
   }
 
-  login = async (creds: UserFormValues) => {
+  login = async (creds: LoginFormValues) => {
     const user = await agent.Account.login(creds);
     store.commonStore.setToken(user.token);
     runInAction(() => (this.user = user));
@@ -42,7 +41,7 @@ export default class UserStore {
       console.log(error);
     }
   };
-  register = async (values: UserFormValues) => {
+  register = async (values: RegisterFormValues) => {
     try {
       await agent.Account.register(values);
       router.navigate("/login");
@@ -51,7 +50,7 @@ export default class UserStore {
     }
   };
   private loadUserRoleFromToken = () => {
-    const jwtToken = localStorage.getItem('jwt');
+    const jwtToken = localStorage.getItem("jwt");
 
     if (jwtToken) {
       try {
@@ -63,10 +62,10 @@ export default class UserStore {
             this._userRole = userRole;
           });
         } else {
-          console.error('Rolle ikke fundet!!:', decodedToken);
+          console.error("Rolle ikke fundet!!:", decodedToken);
         }
       } catch (error) {
-        console.error('Fejl ved Decoding af token:', error);
+        console.error("Fejl ved Decoding af token:", error);
       }
     }
   };

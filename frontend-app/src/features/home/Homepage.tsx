@@ -5,11 +5,11 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 
 const urlParams = new URLSearchParams(window.location.search);
-const tableNumberParam = urlParams.get("table");
+const tableNumberParam = urlParams.get("tableNumber");
 
 if (tableNumberParam) {
   const tableNumber = parseInt(tableNumberParam, 10);
-  localStorage.setItem("tablenumber", tableNumberParam);
+  localStorage.setItem("tableNumber", tableNumberParam);
   console.log(tableNumber);
 }
 
@@ -24,12 +24,11 @@ export default observer(function Homepage() {
             style={{ width: "400px", height: "400px", marginBottom: 12 }}
           />
         </Header>
-       {!userStore.isLoggedIn ? ( 
-       <Header inverted>
-        
-        <Button  as={Link} to='menu' content='Gå Til Menu'/>
-        </Header>
-        ):null}
+        {!userStore.isLoggedIn ? (
+          <Header inverted>
+            <Button as={Link} to="menu" content="Gå Til Menu" />
+          </Header>
+        ) : null}
         {userStore.isLoggedIn ? (
           <>
             <Button as={Link} to="/frontPage" size="huge" inverted>
@@ -38,13 +37,17 @@ export default observer(function Homepage() {
           </>
         ) : (
           <Button.Group>
-            <Button positive as={Link} to="/login" size="huge" content="Login" />
+            <Button
+              positive
+              as={Link}
+              to="/login"
+              size="huge"
+              content="Login"
+            />
             <Button.Or />
             <Button as={Link} to="register" size="huge" content="Register" />
           </Button.Group>
-          
         )}
-       
       </Container>
     </Segment>
   );
