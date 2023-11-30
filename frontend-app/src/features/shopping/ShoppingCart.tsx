@@ -35,6 +35,7 @@ export default observer(function ShoppingCart() {
     };
     agent.Order.create(orderWithTableNumber);
     console.log("Order with Table Number:", orderWithTableNumber);
+    cartItems.forEach((item) => shopCartStore.removeCartQuantity(item.id));
   };
 
   return (

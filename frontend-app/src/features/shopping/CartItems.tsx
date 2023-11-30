@@ -4,15 +4,13 @@ import { Button, Grid, Item, Segment } from "semantic-ui-react";
 
 type CartItemProps = {
   id: number;
-  quantity: number;
 };
 
-export function CartItem({ id, quantity }: CartItemProps) {
+export function CartItem({ id }: CartItemProps) {
   const { productStore, shopCartStore } = useStore();
   const { productById } = productStore;
-  const { decreaseCartQuantity } = shopCartStore;
+  const { decreaseCartQuantity, getItemQuantity } = shopCartStore;
   const item = productById.find((i) => i.id === id);
-
 
   if (item == null) return null;
 
@@ -28,9 +26,9 @@ export function CartItem({ id, quantity }: CartItemProps) {
               <div>{item.productName}</div>
               <div>
                 <span className="price">
-                  {formatCurrency(item.productPrice * quantity)}
+                  {formatCurrency(item.productPrice * getItemQuantity(item.id))}
                 </span>
-                <span className="quantity"> x {quantity} </span>
+                <span className="quantity"> x {getItemQuantity(item.id)} </span>
               </div>
             </div>
           </Grid.Column>
