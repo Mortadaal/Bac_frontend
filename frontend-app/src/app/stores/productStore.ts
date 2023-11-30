@@ -69,7 +69,7 @@ export default class ProductStore {
 
   createProduct = async (product: Products) => {
     this.loading = true;
-    product.id = product.id;
+
     try {
       await agent.Products.create(product);
       runInAction(() => {

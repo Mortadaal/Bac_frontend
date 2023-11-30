@@ -38,7 +38,6 @@ export default class CategoryStore {
 
   createCategory = async (category: Category) => {
     this.categoryLoading = true;
-    category.id = category.id;
     try {
       await agent.Categorys.create(category);
       runInAction(() => {

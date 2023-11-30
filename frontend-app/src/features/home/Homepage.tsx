@@ -5,11 +5,11 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
 
 const urlParams = new URLSearchParams(window.location.search);
-const tableNumberParam = urlParams.get("tableNumber");
+const tableNumberParam = urlParams.get("tablenumber");
 
 if (tableNumberParam) {
   const tableNumber = parseInt(tableNumberParam, 10);
-  localStorage.setItem("tableNumber", tableNumberParam);
+  localStorage.setItem("tablenumber", tableNumberParam);
   console.log(tableNumber);
 }
 

@@ -28,7 +28,7 @@ export const routes: RouteObject[] = [
       { path: "deleteCategory", element: <DeleteCategoryForm /> },
       { path: "addCategory", element: <CategoryForm /> },
       { path: "cart/", element: <ShoppingCart /> },
-      { path: "qrcode", element: <QRCodeList initialNumberOfCodes={3} /> },
+      { path: "qrcode", element: <QRCodeList initialNumberOfCodes={20} /> },
     ],
   },
 ];
