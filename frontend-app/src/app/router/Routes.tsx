@@ -17,7 +17,7 @@ export const routes: RouteObject[] = [
     element: <App />,
     children: [
       { path: "/", element: <Homepage /> },
-      { path: "/:tableNumber", element: <Homepage /> },
+      { path: "/:tablenumber", element: <Homepage /> },
       { path: "/frontPage", element: <FrontPage /> },
       { path: "menu/", element: <ProductDashboard /> },
       { path: "bookingVip", element: <BookingForm /> },
@@ -28,7 +28,7 @@ export const routes: RouteObject[] = [
       { path: "deleteCategory", element: <DeleteCategoryForm /> },
       { path: "addCategory", element: <CategoryForm /> },
       { path: "cart/", element: <ShoppingCart /> },
-      { path: "qrcode", element: <QRCodeList initialNumberOfCodes={3} /> },
+      { path: "qrcode", element: <QRCodeList initialNumberOfCodes={20} /> },
     ],
   },
 ];

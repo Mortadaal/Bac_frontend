@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Products } from "../models/products";
-import agent from "../api/agen";
+import agent from "../api/agent";
 
 export default class ProductStore {
   productRegistry = new Map<number, Products>();
@@ -8,7 +8,7 @@ export default class ProductStore {
   editMode = false;
   loading = false;
   loadingInitial = false;
- 
+  static productById: any;
 
   constructor() {
     makeAutoObservable(this);
@@ -70,7 +70,7 @@ export default class ProductStore {
 
   createProduct = async (product: Products) => {
     this.loading = true;
-    product.id = product.id;
+
     try {
       await agent.Products.create(product);
       runInAction(() => {
@@ -87,7 +87,7 @@ export default class ProductStore {
     }
   };
 
-  EditProduct = async (product: Products) => {
+  editProduct = async (product: Products) => {
     this.loading = true;
     try {
       await agent.Products.update(product);

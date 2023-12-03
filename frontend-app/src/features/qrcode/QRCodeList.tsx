@@ -26,7 +26,7 @@ export default function QRCodeList({
       const tableNumber = i + 1;
       const qrCodeData: QRCodeData = {
         id: tableNumber,
-        url: `${window.location.origin}/?table=${tableNumber}`,
+        url: `${window.location.origin}/?tablenumber=${tableNumber}`,
       };
       return qrCodeData;
     });

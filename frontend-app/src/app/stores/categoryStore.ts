@@ -1,10 +1,8 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { Category } from "../models/category";
-import agent from "../api/agen";
-
+import agent from "../api/agent";
 
 export default class CategoryStore {
-
   categoryRegistry = new Map<number | string, Category>();
   selectedCategory: Category | undefined = undefined;
   editModeCategory = false;
@@ -38,11 +36,8 @@ export default class CategoryStore {
     }
   };
 
-  
-
   createCategory = async (category: Category) => {
     this.categoryLoading = true;
-    category.id = category.id;
     try {
       await agent.Categorys.create(category);
       runInAction(() => {

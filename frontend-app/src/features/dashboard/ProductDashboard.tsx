@@ -15,8 +15,9 @@ export default observer(function ProductDashboard() {
   }, [loadProducts, productRegistry.size]);
 
   useEffect(() => {
-    if (categoryRegistry.size <= 1) loadCategorys();
+    if (categoryRegistry.size < 1) loadCategorys();
   }, [loadCategorys, categoryRegistry.size]);
+
   if (productStore.loadingInitial)
     return <LoadingComponent content="Indlæser Liste" />;
   return (

@@ -1,9 +1,9 @@
 export interface Products {
-    id: number
-    productName: string
-    productPrice: number
-    productDescription: string
-    imageUrl: string
-    onStock: boolean
-    categoryId: any
-  }
+  id: number;
+  productName: string;
+  productPrice: number;
+  productDescription: string;
+  imageUrl: string;
+  onStock: boolean;
+  categoryId: number;
+}
