@@ -3,6 +3,7 @@ import { Button, Container, Header, Image, Segment } from "semantic-ui-react";
 
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../app/stores/store";
+import { router } from "../../app/router/Routes";
 
 const urlParams = new URLSearchParams(window.location.search);
 const tableNumberParam = urlParams.get("tablenumber");
@@ -12,6 +13,16 @@ if (tableNumberParam) {
   localStorage.setItem("tablenumber", tableNumberParam);
   console.log(tableNumber);
 }
+
+const handleGoToForsiden=()=>{
+  router.navigate("/frontpage");
+  window.location.reload();
+}
+const handleGoToMenu=()=>{
+  router.navigate("/menu");
+  window.location.reload();
+}
+
 
 export default observer(function Homepage() {
   const { userStore } = useStore();
@@ -26,12 +37,12 @@ export default observer(function Homepage() {
         </Header>
         {!userStore.isLoggedIn ? (
           <Header inverted>
-            <Button as={Link} to="menu" content="Gå Til Menu" />
+            <Button onClick={handleGoToMenu} content="Gå Til Menu" />
           </Header>
         ) : null}
         {userStore.isLoggedIn ? (
           <>
-            <Button as={Link} to="/frontPage" size="huge" inverted>
+            <Button onClick={handleGoToForsiden} size="huge" inverted>
               Gå til forsiden
             </Button>
           </>
